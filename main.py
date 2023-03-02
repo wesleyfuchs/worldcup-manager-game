@@ -1,8 +1,8 @@
 import json
-from game import quickmatchday, matchday, Team
-from game_fase_final import quickmatchday_fase_final, matchday_fase_final, Team
+from game import quickmatchday, matchday
+from game_fase_final import quickmatchday_fase_final, matchday_fase_final
 from richladder import createrichladder
-
+from team import Team, Jogador
 
 def zerar_pontuacao(database):
     '''Zera a pontuação de cada time'''
@@ -20,7 +20,7 @@ def mostrar_pontuacao_times(database):
 
 
 def partidas(userteam, season, database):
-    with open('data/teams.txt', 'w') as json_file:
+    with open('data/teams_jogadores.txt', 'w') as json_file:
         json.dump(database, json_file, indent=4)
 
     teamcolor = "dark_olive_green3 bold italic"
@@ -58,8 +58,18 @@ def partidas(userteam, season, database):
             match1 = []
             for team in matchbrackets:
                 match0.append(team)
-            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['attack'], database[match0[0]]['defense'], database[match0[0]]['luck'], database[match0[0]]['speed'], database[match0[0]]['stamina'])
-            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['attack'], database[match0[1]]['defense'], database[match0[1]]['luck'], database[match0[1]]['speed'], database[match0[1]]['stamina'])
+            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['jogadores'])
+            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
+            
+            # Adiciona os jogadores do database às equipes
+            for i, team_name in enumerate([team1.name, team2.name]):
+                for jogador in database[team_name]['jogadores']:
+                    jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
+                    if i == 0:
+                        team1.adicionar_jogador(jogador)
+                    else:
+                        team2.adicionar_jogador(jogador)
+            
             match1.append(team1)
             match1.append(team2)
 
@@ -82,7 +92,7 @@ def partidas(userteam, season, database):
             else:
                 quickmatchday(match1, database)
 
-            with open('data/teams.txt', 'w') as json_file:
+            with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
 
         print(' ')
@@ -92,7 +102,7 @@ def partidas(userteam, season, database):
 
 
 def partidas_fase_final(userteam, season, database):
-    with open('data/teams.txt', 'w') as json_file:
+    with open('data/teams_jogadores.txt', 'w') as json_file:
         json.dump(database, json_file, indent=4)
     
     gameweeknum = 0
@@ -123,10 +133,18 @@ def partidas_fase_final(userteam, season, database):
             match1 = []
             for team in matchbrackets:
                 match0.append(team)
-            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['attack'], database[match0[0]]
-                         ['defense'], database[match0[0]]['luck'], database[match0[0]]['speed'], database[match0[0]]['stamina'])
-            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['attack'], database[match0[1]]
-                         ['defense'], database[match0[1]]['luck'], database[match0[1]]['speed'], database[match0[1]]['stamina'])
+            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['jogadores'])
+            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
+            
+            # Adiciona os jogadores do database às equipes
+            for i, team_name in enumerate([team1.name, team2.name]):
+                for jogador in database[team_name]['jogadores']:
+                    jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
+                    if i == 0:
+                        team1.adicionar_jogador(jogador)
+                    else:
+                        team2.adicionar_jogador(jogador)
+                        
             match1.append(team1)
             match1.append(team2)
 
@@ -144,7 +162,7 @@ def partidas_fase_final(userteam, season, database):
             else:
                 quickmatchday_fase_final(match1, database)
 
-            with open('data/teams.txt', 'w') as json_file:
+            with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
 
 
@@ -192,7 +210,7 @@ def realizar_etapa_final(equipes, num_equipes_proxima_etapa, database):
     return partidas
 
 
-with open('data/teams.txt') as f:
+with open('data/teams_jogadores.txt') as f:
     database = json.load(f)
 
 # Lista dos grupos
@@ -222,6 +240,14 @@ for team in database:
     database[team]['won'] = 0
     database[team]['drawn'] = 0
     database[team]['lost'] = 0
+
+for team in database:
+    for jogador in database[team]['jogadores']:
+        jogador['gols'] = 0
+
+# Salva as alterações de volta no arquivo json
+with open('data/teams_jogadores.txt', 'w') as f:
+    json.dump(database, f)
 
 # Zera pontuacao e gols dos times
 zerar_pontuacao(database)
