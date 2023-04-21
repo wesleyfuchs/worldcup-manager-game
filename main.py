@@ -1,8 +1,9 @@
 import json
-from game import quickmatchday, matchday
-from game_fase_final import quickmatchday_fase_final, matchday_fase_final
+from game import matchday
+from game_fase_final import matchday_fase_final
 from richladder import createrichladder
-from team import Team, Jogador
+from team import Team
+from jogador import Jogador
 
 def zerar_pontuacao(database):
     '''Zera a pontuação de cada time'''
@@ -18,8 +19,11 @@ def mostrar_pontuacao_times(database):
               " - " + str(database[team]["score"]))
     print('----')
 
-
+#Arrumar o quickgame(nomes invertidos)
 def partidas(userteam, season, database):
+    partida_rapida = True
+    partida_longa = False
+    
     with open('data/teams_jogadores.txt', 'w') as json_file:
         json.dump(database, json_file, indent=4)
 
@@ -79,22 +83,25 @@ def partidas(userteam, season, database):
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
                     print(' ')
-                    matchday(match1, database)
+                    matchday(match1, database, partida_rapida)
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
+                    input(' ')
                 # Se o usuario escolher Skip (Modo Rapido):
                 else:
-                    quickmatchday(match1, database)
+                    matchday(match1, database, partida_longa)
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
+                    input(' ')
             else:
-                quickmatchday(match1, database)
+                matchday(match1, database, partida_longa)
 
             with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
-
+                
+        input(' ')
         print(' ')
         for grupos in grupos_dict:
             createrichladder(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
@@ -102,6 +109,9 @@ def partidas(userteam, season, database):
 
 
 def partidas_fase_final(userteam, season, database):
+    partida_rapida = True
+    partida_longa = False
+    
     with open('data/teams_jogadores.txt', 'w') as json_file:
         json.dump(database, json_file, indent=4)
     
@@ -155,12 +165,12 @@ def partidas_fase_final(userteam, season, database):
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
                     print(' ')
-                    matchday_fase_final(match1, database)
+                    matchday_fase_final(match1, database, partida_rapida)
                     print(' ')
                 else:
-                    quickmatchday_fase_final(match1, database)
+                    matchday_fase_final(match1, database, partida_longa)
             else:
-                quickmatchday_fase_final(match1, database)
+                matchday_fase_final(match1, database, partida_longa)
 
             with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
