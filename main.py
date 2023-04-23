@@ -1,12 +1,12 @@
 import json
 from game import matchday
-from game_fase_final import matchday_fase_final
 from richladder import createrichladder
 from team import Team
 from jogador import Jogador
 
-GROUP_STAGE = 91
-PLAYOFFS = 121
+# Tempo de duracao das partidas
+TEMPO_GROUP_STAGE = 91
+TEMPO_PLAYOFFS = 121
 
 
 def zerar_pontuacao(database):
@@ -24,7 +24,7 @@ def mostrar_pontuacao_times(database):
     print('----')
 
 #Arrumar o quickgame(nomes invertidos)
-def partidas(userteam, season, database):
+def partidas(userteam, season, database, tempo_partida, fase):
     partida_rapida = True
     partida_longa = False
     
@@ -36,12 +36,13 @@ def partidas(userteam, season, database):
     gameweeknum = 0
     for week in season:
         gameweeknum += 1
-        # used to determine next opponent by skipping ahead by 1 in the index
-        upcomingArray = []
-        x = 0
-        for i in season:
-            upcomingArray.append(i)
-            x += 1
+        
+        # # used to determine next opponent by skipping ahead by 1 in the index
+        # upcomingArray = []
+        # x = 0
+        # for i in season:
+        #     upcomingArray.append(i)
+        #     x += 1
 
         # Pergunta se o usuario ira jogar ou skippar o proximo jogo!
         print("1. Jogar")
@@ -51,7 +52,8 @@ def partidas(userteam, season, database):
         # print('Gameweek: ' + str(gameweeknum))
         print(" ")
 
-        # newweek is created to ensure that the user team is always at the front of the gameweek for readability
+        # newweek é criado para garantir que o time do usuario esteja sempre a frente dos outros para melhor redabilidade
+        # (o userteam é removido da posição que esteja e logo após isso é inserido na posição 0 novamente)
         newweek = []
         for matchbrackets in week:
             newweek.append(matchbrackets)
@@ -87,97 +89,30 @@ def partidas(userteam, season, database):
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
                     print(' ')
-                    matchday(match1, database, partida_rapida, GROUP_STAGE, '')
+                    matchday(match1, database, partida_rapida, tempo_partida, fase)
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
                     input(' ')
                 # Se o usuario escolher Skip (Modo Rapido):
                 else:
-                    matchday(match1, database, partida_longa, GROUP_STAGE, '')
+                    matchday(match1, database, partida_longa, tempo_partida, fase)
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
                     input(' ')
             else:
-                matchday(match1, database, partida_longa, GROUP_STAGE, '')
+                matchday(match1, database, partida_longa, tempo_partida, fase)
 
             with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
-                
-        input(' ')
-        print(' ')
-        for grupos in grupos_dict:
-            createrichladder(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
-        print(' ')
-
-
-def partidas_fase_final(userteam, season, database):
-    partida_rapida = True
-    partida_longa = False
-    
-    with open('data/teams_jogadores.txt', 'w') as json_file:
-        json.dump(database, json_file, indent=4)
-    
-    gameweeknum = 0
-    for week in season:
-        gameweeknum += 1
-        # used to determine next opponent by skipping ahead by 1 in the index
-        upcomingArray = []
-        x = 0
-        for i in season:
-            upcomingArray.append(i)
-            x += 1
-        
-        print("1. Jogar")
-        print("2. Skip")
-        gamechoice = input("Gostaria de Jogar ou Pular o jogo? ")
-        # newweek is created to ensure that the user team is always at the front of the gameweek for readability
-        newweek = []
-        for matchbrackets in week:
-            newweek.append(matchbrackets)
-            for m in newweek:
-                if userteam in m:
-                    newweek.remove(m)
-                    newweek.insert(0, m)
-
-        # for each match in a week, set up the game using temporary versions of the team class
-        for matchbrackets in newweek:
-            match0 = []
-            match1 = []
-            for team in matchbrackets:
-                match0.append(team)
-            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['jogadores'])
-            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
-            
-            # Adiciona os jogadores do database às equipes
-            for i, team_name in enumerate([team1.name, team2.name]):
-                for jogador in database[team_name]['jogadores']:
-                    jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
-                    if i == 0:
-                        team1.adicionar_jogador(jogador)
-                    else:
-                        team2.adicionar_jogador(jogador)
-                        
-            match1.append(team1)
-            match1.append(team2)
-
-            # Se o time do usuario estiver no matchbracket
-            if userteam in match0:
-                
-                # if user wants to play a game use long game mode matchday
-                if gamechoice == "1":
-                    print(match0[0] + " vs " + match0[1])
-                    print(' ')
-                    matchday(match1, database, partida_rapida, PLAYOFFS, 'playoffs')
-                    print(' ')
-                else:
-                    matchday(match1, database, partida_longa, PLAYOFFS, 'playoffs')
-            else:
-                matchday(match1, database, partida_longa, PLAYOFFS, 'playoffs')
-
-            with open('data/teams_jogadores.txt', 'w') as json_file:
-                json.dump(database, json_file, indent=4)
+               
+        if fase == 'grupos':
+            input(' ')
+            print(' ')
+            for grupos in grupos_dict:
+                createrichladder(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
+            print(' ')
 
 
 def ordenar_fase_final(confrontos):
@@ -210,18 +145,18 @@ def realizar_etapa_final(equipes, num_equipes_proxima_etapa, database):
 
 
     # Criar a lista de partidas da próxima etapa
-    partidas = [(equipes_ordenadas[i][0], equipes_ordenadas[i + 1][0])for i in range(0, num_equipes_proxima_etapa, 2)]
+    lista_partidas = [(equipes_ordenadas[i][0], equipes_ordenadas[i + 1][0])for i in range(0, num_equipes_proxima_etapa, 2)]
 
     # Zerar a pontuação das equipes
     zerar_pontuacao(database)
 
     # Realizar as partidas da próxima etapa
-    partidas_fase_final(userteam, [partidas], database)
+    partidas(userteam, [lista_partidas], database, TEMPO_PLAYOFFS, 'playoffs')
 
-    partidas = [[equipes_ordenadas[i][0], equipes_ordenadas[i + 1][0]]
+    resultado_partidas = [[equipes_ordenadas[i][0], equipes_ordenadas[i + 1][0]]
                 for i in range(0, num_equipes_proxima_etapa, 2)]
 
-    return partidas
+    return resultado_partidas
 
 
 with open('data/teams_jogadores.txt') as f:
@@ -291,7 +226,7 @@ if userteamkey > 0 and userteamkey < 33:
             userteam = database[team]['name']
             print('Voce escolheu: ' + database[team]['name'])
             input('Precione enter para começar! ')
-            partidas(userteam, season, database)
+            partidas(userteam, season, database, TEMPO_GROUP_STAGE, 'grupos')
 else:
     print('Numero invalido!')
 
@@ -319,7 +254,7 @@ for i in range(1, 8, 2):
     lista_round_16.append(round_i)
 
 zerar_pontuacao(database)
-partidas_fase_final(userteam, [oitavas_de_final], database)
+partidas(userteam, [oitavas_de_final], database, TEMPO_PLAYOFFS, 'playoffs')
 
 
 # Quartas de Finais
