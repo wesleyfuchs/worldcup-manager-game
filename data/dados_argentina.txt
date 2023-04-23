@@ -1,0 +1,46 @@
+[{
+    "nome": "\u00c1. Di Mar\u00eda", 
+    "pais": "Argentina", 
+    "ball_control": 87.5, 
+    "passe": 82.33, 
+    "finalizacao": 79.25, 
+    "defesa": 47.5, 
+    "penalty": 73, 
+    "stamina": 75.57, 
+    "GK_skill": 10.2
+}, 
+{
+    "nome": "N. Molina", 
+    "pais": "Argentina", 
+    "ball_control": 76.5, 
+    "passe": 73.0, 
+    "finalizacao": 63.38, 
+    "defesa": 72.0, 
+    "penalty": 44, 
+    "stamina": 76.57, 
+    "GK_skill": 9.6
+}, 
+{
+    "nome": "G. Pezzella", 
+    "pais": "Argentina", 
+    "ball_control": 59.5, 
+    "passe": 55.33, 
+    "finalizacao": 49.62, 
+    "defesa": 78.25, 
+    "penalty": 35, 
+    "stamina": 55.0, 
+    "GK_skill": 10.8
+}, 
+{
+    "nome": "N. Otamendi", 
+    "pais": "Argentina", 
+    "ball_control": 58.5, 
+    "passe": 65.0, 
+    "finalizacao": 56.5, 
+    "defesa": 82.75, 
+    "penalty": 45, 
+    "stamina": 69.43, 
+    "GK_skill": 9.6
+}, 
+{
+    "nome": "P. Dybala", "pais": "Argentina", "ball_control": 91.5, "passe": 82.33, "finalizacao": 82.62, "defesa": 38.5, "penalty": 84, "stamina": 77.14, "GK_skill": 5.2}, {"nome": "G. Rodr\u00edguez", "pais": "Argentina", "ball_control": 72.5, "passe": 71.67, "finalizacao": 59.5, "defesa": 84.75, "penalty": 53, "stamina": 54.14, "GK_skill": 11.8}, {"nome": "J. Foyth", "pais": "Argentina", "ball_control": 73.0, "passe": 71.67, "finalizacao": 52.5, "defesa": 80.0, "penalty": 47, "stamina": 72.57, "GK_skill": 10.6}, {"nome": "C. Romero", "pais": "Argentina", "ball_control": 63.5, "passe": 60.0, "finalizacao": 50.62, "defesa": 84.75, "penalty": 40, "stamina": 74.71, "GK_skill": 9.4}, {"nome": "N. Tagliafico", "pais": "Argentina", "ball_control": 74.5, "passe": 75.33, "finalizacao": 58.62, "defesa": 79.5, "penalty": 46, "stamina": 81.0, "GK_skill": 12.6}, {"nome": "T. Almada", "pais": "Argentina", "ball_control": 80.5, "passe": 68.67, "finalizacao": 68.25, "defesa": 53.75, "penalty": 77, "stamina": 77.29, "GK_skill": 9.4}, {"nome": "M. Acu\u00f1a", "pais": "Argentina", "ball_control": 87.5, "passe": 83.0, "finalizacao": 75.12, "defesa": 82.5, "penalty": 76, "stamina": 80.0, "GK_skill": 12.4}, {"nome": "R. Ruiz Rodr\u00edguez", "pais": "Argentina", "ball_control": 71.0, "passe": 64.67, "finalizacao": 62.0, "defesa": 32.75, "penalty": 66, "stamina": 69.57, "GK_skill": 12.2}, {"nome": "A. Mac Allister", "pais": "Argentina", "ball_control": 76.5, "passe": 77.33, "finalizacao": 76.0, "defesa": 53.75, "penalty": 77, "stamina": 68.14, "GK_skill": 11.2}, {"nome": "E. Fern\u00e1ndez", "pais": "Argentina", "ball_control": 78.5, "passe": 73.67, "finalizacao": 72.25, "defesa": 72.75, "penalty": 70, "stamina": 76.29, "GK_skill": 7.8}, {"nome": "E. Mart\u00ednez", "pais": "Argentina", "ball_control": 24.0, "passe": 43.67, "finalizacao": 23.38, "defesa": 16.0, "penalty": 42, "stamina": 54.86, "GK_skill": 83.6}, {"nome": "R. De Paul", "pais": "Argentina", "ball_control": 83.5, "passe": 82.67, "finalizacao": 75.12, "defesa": 76.5, "penalty": 66, "stamina": 79.0, "GK_skill": 11.2}, {"nome": "L. Mart\u00ednez", "pais": "Argentina", "ball_control": 77.5, "passe": 79.0, "finalizacao": 62.62, "defesa": 82.0, "penalty": 55, "stamina": 79.14, "GK_skill": 11.0}, {"nome": "\u00c1. Correa", "pais": "Argentina", "ball_control": 87.0, "passe": 74.0, "finalizacao": 79.88, "defesa": 46.75, "penalty": 66, "stamina": 78.71, "GK_skill": 11.2}, {"nome": "T. Silva", "pais": "Argentina", "ball_control": 58.0, "passe": 51.67, "finalizacao": 41.25, "defesa": 58.5, "penalty": 31, "stamina": 61.71, "GK_skill": 8.0}, {"nome": "L. Mart\u00ednez", "pais": "Argentina", "ball_control": 85.0, "passe": 69.0, "finalizacao": 79.5, "defesa": 43.75, "penalty": 74, "stamina": 84.86, "GK_skill": 9.6}, {"nome": "J. \u00c1lvarez", "pais": "Argentina", "ball_control": 82.5, "passe": 74.0, "finalizacao": 77.88, "defesa": 51.25, "penalty": 73, "stamina": 78.14, "GK_skill": 9.0}, {"nome": "L. Messi", "pais": "Argentina", "ball_control": 94.0, "passe": 88.33, "finalizacao": 88.0, "defesa": 29.75, "penalty": 75, "stamina": 79.29, "GK_skill": 10.8}, {"nome": "G. Montiel", "pais": "Argentina", "ball_control": 73.5, "passe": 71.33, "finalizacao": 58.38, "defesa": 75.75, "penalty": 75, "stamina": 81.29, "GK_skill": 7.6}, {"nome": "E. Palacios", "pais": "Argentina", "ball_control": 78.5, "passe": 76.33, "finalizacao": 66.88, "defesa": 76.25, "penalty": 63, "stamina": 72.43, "GK_skill": 7.6}, {"nome": "L. Paredes", "pais": "Argentina", "ball_control": 79.5, "passe": 81.67, "finalizacao": 73.88, "defesa": 77.5, "penalty": 64, "stamina": 69.14, "GK_skill": 9.6}]

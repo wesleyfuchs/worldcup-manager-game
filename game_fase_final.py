@@ -135,12 +135,10 @@ def matchday_fase_final(match, json, quick_game):
                 else:
                     # Calcula a chance de manter a posse da bola
                     ladrao_bola = other_team.players[random.randint(0,qnt_jogadores_other_team)]
-                    if jogador_com_bola.ball_control < ladrao_bola.ball_control:
+                    if jogador_com_bola.ball_control < ladrao_bola.defesa:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
-                    else: 
-                        pass
             # Passar a bola
             elif n1 <= 65:
                 # Chance de errar o passe

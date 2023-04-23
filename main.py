@@ -5,6 +5,10 @@ from richladder import createrichladder
 from team import Team
 from jogador import Jogador
 
+GROUP_STAGE = 91
+PLAYOFFS = 121
+
+
 def zerar_pontuacao(database):
     '''Zera a pontuação de cada time'''
     for team in database:
@@ -83,20 +87,20 @@ def partidas(userteam, season, database):
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
                     print(' ')
-                    matchday(match1, database, partida_rapida)
+                    matchday(match1, database, partida_rapida, GROUP_STAGE, '')
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
                     input(' ')
                 # Se o usuario escolher Skip (Modo Rapido):
                 else:
-                    matchday(match1, database, partida_longa)
+                    matchday(match1, database, partida_longa, GROUP_STAGE, '')
                     print(' ')
                     print('Gameweek: ' + str(gameweeknum))
                     print(' ')
                     input(' ')
             else:
-                matchday(match1, database, partida_longa)
+                matchday(match1, database, partida_longa, GROUP_STAGE, '')
 
             with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
@@ -165,12 +169,12 @@ def partidas_fase_final(userteam, season, database):
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
                     print(' ')
-                    matchday_fase_final(match1, database, partida_rapida)
+                    matchday(match1, database, partida_rapida, PLAYOFFS, 'playoffs')
                     print(' ')
                 else:
-                    matchday_fase_final(match1, database, partida_longa)
+                    matchday(match1, database, partida_longa, PLAYOFFS, 'playoffs')
             else:
-                matchday_fase_final(match1, database, partida_longa)
+                matchday(match1, database, partida_longa, PLAYOFFS, 'playoffs')
 
             with open('data/teams_jogadores.txt', 'w') as json_file:
                 json.dump(database, json_file, indent=4)
