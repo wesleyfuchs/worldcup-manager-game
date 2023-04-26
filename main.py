@@ -32,27 +32,13 @@ def partidas(userteam, season, database, tempo_partida, fase):
         json.dump(database, json_file, indent=4)
 
     teamcolor = "dark_olive_green3 bold italic"
-    leaguecolor = "chartreuse3"
+    leaguecolor = "red1"
     gameweeknum = 0
     for week in season:
+        #used to print gameweeks
         gameweeknum += 1
-        
-        # # used to determine next opponent by skipping ahead by 1 in the index
-        # upcomingArray = []
-        # x = 0
-        # for i in season:
-        #     upcomingArray.append(i)
-        #     x += 1
 
-        # Pergunta se o usuario ira jogar ou skippar o proximo jogo!
-        print("1. Jogar")
-        print("2. Skip")
-        gamechoice = input("Gostaria de Jogar ou Pular o jogo? ")
-        print(" ")
-        # print('Gameweek: ' + str(gameweeknum))
-        print(" ")
-
-        # newweek é criado para garantir que o time do usuario esteja sempre a frente dos outros para melhor redabilidade
+        # newweek é criado para garantir que o time do usuario esteja sempre a frente dos outros para melhor legibilidade
         # (o userteam é removido da posição que esteja e logo após isso é inserido na posição 0 novamente)
         newweek = []
         for matchbrackets in week:
@@ -61,8 +47,19 @@ def partidas(userteam, season, database, tempo_partida, fase):
                 if userteam in m:
                     newweek.remove(m)
                     newweek.insert(0, m)
+          
+        if userteam == newweek[0][0]:
+            print('Seu proximo adversário sera: {}'.format(newweek[0][1]))
+        elif userteam == newweek[0][0]:
+            print('Seu proximo adversário sera: {}'.format(newweek[0][0]))
+        
+            
+        # Pergunta se o usuario ira jogar ou skippar o proximo jogo!
+        print("1. Jogar")
+        print("2. Skip")
+        gamechoice = input("Gostaria de Jogar ou Pular o jogo? ")
 
-        # for each match in a week, set up the game using temporary versions of the team class
+        # Para cada match em uma week, configura o jogo usando versões temporarias da classe time
         for matchbrackets in newweek:
             match0 = []
             match1 = []
@@ -72,14 +69,25 @@ def partidas(userteam, season, database, tempo_partida, fase):
             team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
             
             # Adiciona os jogadores do database às equipes
-            for i, team_name in enumerate([team1.name, team2.name]):
-                for jogador in database[team_name]['jogadores']:
-                    jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
-                    if i == 0:
-                        team1.adicionar_jogador(jogador)
-                    else:
-                        team2.adicionar_jogador(jogador)
+            # for i, team_name in enumerate([team1.name, team2.name]):
+            #     for jogador in database[team_name]['jogadores']:
+            #         jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
+            #         if i == 0:
+            #             print(jogador.nome)
+            #             team1.adicionar_jogador(jogador)
+            #         else:
+            #             team2.adicionar_jogador(jogador)
             
+            # Loop team1
+            for jogador in database[team1.name]['jogadores'][:11]:
+                jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
+                team1.adicionar_jogador(jogador)
+
+            # Loop team2 
+            for jogador in database[team2.name]['jogadores'][:11]:
+                jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
+                team2.adicionar_jogador(jogador)
+
             match1.append(team1)
             match1.append(team2)
 
@@ -88,6 +96,14 @@ def partidas(userteam, season, database, tempo_partida, fase):
                 # Se o usuario escolher o modo Play:
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
+                    print(' ')
+                    print('1. Editar Escalação')
+                    print('2. Usar Escalação Padão')
+                    escalacao_choice = input("Gostaria de editar a escalação? ")
+                    if escalacao_choice == "1":
+                        if userteam == match0[0]:
+                            for jogador in team1.jogadores:
+                                print("{} - {}".format(jogador['nome'], jogador['posicao']))
                     print(' ')
                     matchday(match1, database, partida_rapida, tempo_partida, fase)
                     print(' ')
@@ -198,7 +214,7 @@ for team in database:
 with open('data/teams_jogadores.txt', 'w') as f:
     json.dump(database, f)
 
-# Zera pontuacao e gols dos times
+# Zera pontuacao dos times
 zerar_pontuacao(database)
 
 
@@ -225,6 +241,9 @@ if userteamkey > 0 and userteamkey < 33:
         if userteamkey == database[team]['key']:
             userteam = database[team]['name']
             print('Voce escolheu: ' + database[team]['name'])
+            print('Escalação')
+            for jogador in database[team]['jogadores']:
+                print('-' + jogador['nome'])
             input('Precione enter para começar! ')
             partidas(userteam, season, database, TEMPO_GROUP_STAGE, 'grupos')
 else:

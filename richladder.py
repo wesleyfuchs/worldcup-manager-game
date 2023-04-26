@@ -40,7 +40,7 @@ def createrichladder(data, leaguecolor, teamcolor, userteam, gameweek):
     position = 0
     for team in sorteddicc:
         
-        #if team is the userteam, make the name bold, else make normal
+        #Colocar cor no time escolhido
         position += 1
         if team == userteam:
             table.add_row(str(position), str(data[team]["name"]), str(data[team]["score"]), str(gameweek), str(data[team]["won"]), str(data[team]["drawn"]), str(data[team]["lost"]), str(data[team]["goals"]), str(data[team]["goals_sofridos"]), str(data[team]["goaldif"]),  style=teamcolor)

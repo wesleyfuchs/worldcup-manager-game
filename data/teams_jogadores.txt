@@ -4,12 +4,12 @@
         "name": "Catar",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -1,
-        "goals": 4,
-        "goals_sofridos": 5,
-        "won": 1,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Saad Al Sheeb",
@@ -36,7 +36,7 @@
                 "defesa": 68,
                 "passe": 55,
                 "ball_control": 53,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Ismael Mohammad",
@@ -45,7 +45,7 @@
                 "defesa": 63,
                 "passe": 64,
                 "ball_control": 65,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Tarek Salman",
@@ -54,7 +54,7 @@
                 "defesa": 65,
                 "passe": 58,
                 "ball_control": 58,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Homam Ahmed",
@@ -99,7 +99,7 @@
                 "defesa": 15,
                 "passe": 50,
                 "ball_control": 65,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Akram Afif",
@@ -117,12 +117,12 @@
         "name": "Equador",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -5,
-        "goals": 2,
-        "goals_sofridos": 7,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
         "drawn": 0,
-        "lost": 3,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Jose Santigaro",
@@ -176,7 +176,7 @@
                 "defesa": 73,
                 "passe": 67,
                 "ball_control": 65,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Pedro Vaquizo",
@@ -221,7 +221,7 @@
                 "defesa": 18,
                 "passe": 53,
                 "ball_control": 75,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -230,11 +230,11 @@
         "name": "Senegal",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 7,
-        "goals": 9,
-        "goals_sofridos": 2,
-        "won": 3,
-        "drawn": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
         "lost": 0,
         "jogadores": [
             {
@@ -280,7 +280,7 @@
                 "defesa": 76,
                 "passe": 70,
                 "ball_control": 72,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Nampalys Mendy",
@@ -298,7 +298,7 @@
                 "defesa": 75,
                 "passe": 51,
                 "ball_control": 44,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Iliman Ndiaye",
@@ -307,7 +307,7 @@
                 "defesa": 25,
                 "passe": 60,
                 "ball_control": 76,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Ismaila Sarr",
@@ -316,7 +316,7 @@
                 "defesa": 18,
                 "passe": 63,
                 "ball_control": 80,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Krepin Diatta",
@@ -334,7 +334,7 @@
                 "defesa": 15,
                 "passe": 62,
                 "ball_control": 78,
-                "gols": 3
+                "gols": 0
             }
         ]
     },
@@ -343,12 +343,12 @@
         "name": "Holanda",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 1,
-        "goals": 8,
-        "goals_sofridos": 7,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Andries Noppert",
@@ -393,7 +393,7 @@
                 "defesa": 78,
                 "passe": 73,
                 "ball_control": 73,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Marten de Roon",
@@ -411,7 +411,7 @@
                 "defesa": 76,
                 "passe": 87,
                 "ball_control": 88,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Daley Blind",
@@ -420,7 +420,7 @@
                 "defesa": 80,
                 "passe": 83,
                 "ball_control": 80,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Cody Gakpo",
@@ -447,7 +447,7 @@
                 "defesa": 25,
                 "passe": 80,
                 "ball_control": 87,
-                "gols": 3
+                "gols": 0
             }
         ]
     },
@@ -456,12 +456,12 @@
         "name": "Inglaterra",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 6,
-        "goals": 8,
-        "goals_sofridos": 2,
-        "won": 3,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 1,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Jordan Pickford",
@@ -497,7 +497,7 @@
                 "defesa": 76,
                 "passe": 71,
                 "ball_control": 70,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Luke Shaw",
@@ -515,7 +515,7 @@
                 "defesa": 77,
                 "passe": 82,
                 "ball_control": 80,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Declan Rice",
@@ -524,7 +524,7 @@
                 "defesa": 82,
                 "passe": 77,
                 "ball_control": 77,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Jude Bellingham",
@@ -542,7 +542,7 @@
                 "defesa": 68,
                 "passe": 78,
                 "ball_control": 86,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Phil Foden",
@@ -551,7 +551,7 @@
                 "defesa": 52,
                 "passe": 82,
                 "ball_control": 88,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Harry Kane",
@@ -560,7 +560,7 @@
                 "defesa": 37,
                 "passe": 83,
                 "ball_control": 85,
-                "gols": 2
+                "gols": 0
             }
         ]
     },
@@ -569,12 +569,12 @@
         "name": "Ira",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -6,
-        "goals": 1,
-        "goals_sofridos": 7,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
         "drawn": 0,
-        "lost": 3,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Alireza Beiranvand",
@@ -673,7 +673,7 @@
                 "defesa": 30,
                 "passe": 76,
                 "ball_control": 83,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -682,12 +682,12 @@
         "name": "Estados Unidos",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -3,
-        "goals": 5,
-        "goals_sofridos": 8,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -696,7 +696,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -705,7 +705,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -714,7 +714,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -723,7 +723,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -732,7 +732,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -741,7 +741,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -750,7 +750,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -759,7 +759,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -768,7 +768,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -777,7 +777,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -786,7 +786,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -795,12 +795,12 @@
         "name": "Pais de Gales",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 1,
-        "goals": 5,
-        "goals_sofridos": 4,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 1,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -908,11 +908,11 @@
         "name": "Argentina",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 14,
-        "goals": 14,
+        "goaldif": 0,
+        "goals": 0,
         "goals_sofridos": 0,
-        "won": 3,
-        "drawn": 1,
+        "won": 0,
+        "drawn": 0,
         "lost": 0,
         "jogadores": [
             {
@@ -931,7 +931,7 @@
                 "defesa": 83,
                 "passe": 73,
                 "ball_control": 66,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Molina",
@@ -940,7 +940,7 @@
                 "defesa": 73,
                 "passe": 75,
                 "ball_control": 77,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Acuna",
@@ -967,7 +967,7 @@
                 "defesa": 78,
                 "passe": 85,
                 "ball_control": 86,
-                "gols": 3
+                "gols": 0
             },
             {
                 "nome": "Mac Allister",
@@ -976,7 +976,7 @@
                 "defesa": 52,
                 "passe": 78,
                 "ball_control": 77,
-                "gols": 3
+                "gols": 0
             },
             {
                 "nome": "Enzo Fernandez",
@@ -985,7 +985,7 @@
                 "defesa": 74,
                 "passe": 80,
                 "ball_control": 80,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Di Maria",
@@ -994,7 +994,7 @@
                 "defesa": 50,
                 "passe": 83,
                 "ball_control": 88,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Alvarez",
@@ -1003,7 +1003,7 @@
                 "defesa": 47,
                 "passe": 74,
                 "ball_control": 83,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Messi",
@@ -1012,7 +1012,7 @@
                 "defesa": 25,
                 "passe": 91,
                 "ball_control": 95,
-                "gols": 2
+                "gols": 0
             }
         ]
     },
@@ -1021,12 +1021,12 @@
         "name": "Arabia Saudita",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -3,
-        "goals": 2,
-        "goals_sofridos": 5,
-        "won": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Yasser Al Mosailem",
@@ -1125,7 +1125,7 @@
                 "defesa": 13,
                 "passe": 55,
                 "ball_control": 67,
-                "gols": 2
+                "gols": 0
             }
         ]
     },
@@ -1134,11 +1134,11 @@
         "name": "Mexico",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 3,
-        "goals": 5,
-        "goals_sofridos": 2,
-        "won": 3,
-        "drawn": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
         "lost": 0,
         "jogadores": [
             {
@@ -1175,7 +1175,7 @@
                 "defesa": 74,
                 "passe": 67,
                 "ball_control": 59,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Jesus Gallardo",
@@ -1193,7 +1193,7 @@
                 "defesa": 80,
                 "passe": 70,
                 "ball_control": 69,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Carlos Rodriguez",
@@ -1229,7 +1229,7 @@
                 "defesa": 33,
                 "passe": 75,
                 "ball_control": 78,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Alexis Vega",
@@ -1247,12 +1247,12 @@
         "name": "Polonia",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -9,
+        "goaldif": 0,
         "goals": 0,
-        "goals_sofridos": 9,
+        "goals_sofridos": 0,
         "won": 0,
         "drawn": 0,
-        "lost": 3,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -1360,12 +1360,12 @@
         "name": "Franca",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 3,
-        "goals": 5,
-        "goals_sofridos": 2,
-        "won": 1,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Lloris",
@@ -1392,7 +1392,7 @@
                 "defesa": 84,
                 "passe": 70,
                 "ball_control": 75,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Upamecano",
@@ -1410,7 +1410,7 @@
                 "defesa": 80,
                 "passe": 79,
                 "ball_control": 81,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Tchouameni",
@@ -1464,7 +1464,7 @@
                 "defesa": 33,
                 "passe": 82,
                 "ball_control": 92,
-                "gols": 3
+                "gols": 0
             }
         ]
     },
@@ -1473,12 +1473,12 @@
         "name": "Australia",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -6,
-        "goals": 3,
-        "goals_sofridos": 9,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -1487,7 +1487,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1496,7 +1496,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1505,7 +1505,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1514,7 +1514,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1523,7 +1523,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1532,7 +1532,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1541,7 +1541,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1550,7 +1550,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1559,7 +1559,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1568,7 +1568,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1577,7 +1577,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -1586,12 +1586,12 @@
         "name": "Dinamarca",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -3,
+        "goaldif": 0,
         "goals": 0,
-        "goals_sofridos": 3,
+        "goals_sofridos": 0,
         "won": 0,
-        "drawn": 1,
-        "lost": 2,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -1699,12 +1699,12 @@
         "name": "Tunisia",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 1,
-        "goals": 5,
-        "goals_sofridos": 4,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -1713,7 +1713,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1722,7 +1722,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1731,7 +1731,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1740,7 +1740,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1749,7 +1749,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1758,7 +1758,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1767,7 +1767,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1776,7 +1776,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1785,7 +1785,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1794,7 +1794,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1803,7 +1803,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             }
         ]
     },
@@ -1812,12 +1812,12 @@
         "name": "Espanha",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -1,
-        "goals": 2,
-        "goals_sofridos": 3,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
-        "drawn": 2,
-        "lost": 1,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -1826,7 +1826,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1835,7 +1835,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1844,7 +1844,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1853,7 +1853,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1862,7 +1862,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1871,7 +1871,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1880,7 +1880,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1889,7 +1889,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1898,7 +1898,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1907,7 +1907,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -1916,7 +1916,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -1925,12 +1925,12 @@
         "name": "Costa Rica",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 2,
-        "goals": 8,
-        "goals_sofridos": 6,
-        "won": 2,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2039,11 +2039,11 @@
         "score": 0,
         "penalti_goals": 0,
         "goaldif": 0,
-        "goals": 4,
-        "goals_sofridos": 4,
-        "won": 1,
-        "drawn": 2,
-        "lost": 1,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2152,10 +2152,10 @@
         "score": 0,
         "penalti_goals": 0,
         "goaldif": 0,
-        "goals": 1,
-        "goals_sofridos": 1,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
-        "drawn": 3,
+        "drawn": 0,
         "lost": 0,
         "jogadores": [
             {
@@ -2264,12 +2264,12 @@
         "name": "Belgica",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 2,
-        "goals": 7,
-        "goals_sofridos": 5,
-        "won": 2,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2377,12 +2377,12 @@
         "name": "Canada",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -2,
-        "goals": 4,
-        "goals_sofridos": 6,
-        "won": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2490,12 +2490,12 @@
         "name": "Marrocos",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -3,
-        "goals": 2,
-        "goals_sofridos": 5,
-        "won": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2603,12 +2603,12 @@
         "name": "Croacia",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 2,
-        "goals": 10,
-        "goals_sofridos": 8,
-        "won": 2,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2617,7 +2617,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2626,7 +2626,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2635,7 +2635,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2644,7 +2644,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2653,7 +2653,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2662,7 +2662,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2671,7 +2671,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2680,7 +2680,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2689,7 +2689,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2698,7 +2698,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2707,7 +2707,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 4
+                "gols": 0
             }
         ]
     },
@@ -2716,12 +2716,12 @@
         "name": "Brasil",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 2,
-        "goals": 8,
-        "goals_sofridos": 6,
-        "won": 3,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 1,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2730,7 +2730,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2739,7 +2739,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2748,7 +2748,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2757,7 +2757,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2766,7 +2766,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2775,7 +2775,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2784,7 +2784,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2793,7 +2793,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2802,7 +2802,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2811,7 +2811,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2820,7 +2820,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -2829,12 +2829,12 @@
         "name": "Servia",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -3,
-        "goals": 3,
-        "goals_sofridos": 6,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
-        "drawn": 1,
-        "lost": 2,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -2843,7 +2843,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2852,7 +2852,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2861,7 +2861,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2870,7 +2870,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2879,7 +2879,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2888,7 +2888,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2897,7 +2897,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2906,7 +2906,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2915,7 +2915,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2924,7 +2924,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -2933,7 +2933,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -2942,12 +2942,12 @@
         "name": "Suica",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 1,
-        "goals": 2,
-        "goals_sofridos": 1,
-        "won": 1,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -3055,12 +3055,12 @@
         "name": "Camaroes",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -1,
-        "goals": 7,
-        "goals_sofridos": 8,
-        "won": 2,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -3168,11 +3168,11 @@
         "name": "Portugal",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 5,
-        "goals": 10,
-        "goals_sofridos": 5,
-        "won": 3,
-        "drawn": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
         "lost": 0,
         "jogadores": [
             {
@@ -3182,7 +3182,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3191,7 +3191,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3200,7 +3200,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3209,7 +3209,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3218,7 +3218,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3227,7 +3227,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3236,7 +3236,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3245,7 +3245,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3254,7 +3254,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3263,7 +3263,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3272,7 +3272,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             }
         ]
     },
@@ -3281,12 +3281,12 @@
         "name": "Gana",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -2,
-        "goals": 4,
-        "goals_sofridos": 6,
-        "won": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
         "drawn": 0,
-        "lost": 2,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -3295,7 +3295,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3304,7 +3304,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3313,7 +3313,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3322,7 +3322,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3331,7 +3331,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3340,7 +3340,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3349,7 +3349,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3358,7 +3358,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3367,7 +3367,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3376,7 +3376,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3385,7 +3385,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 1
+                "gols": 0
             }
         ]
     },
@@ -3394,12 +3394,12 @@
         "name": "Uruguai",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": -4,
-        "goals": 1,
-        "goals_sofridos": 5,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
         "won": 0,
         "drawn": 0,
-        "lost": 3,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -3507,12 +3507,12 @@
         "name": "Coreia do Sul",
         "score": 0,
         "penalti_goals": 0,
-        "goaldif": 2,
-        "goals": 7,
-        "goals_sofridos": 5,
-        "won": 2,
-        "drawn": 1,
-        "lost": 1,
+        "goaldif": 0,
+        "goals": 0,
+        "goals_sofridos": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
         "jogadores": [
             {
                 "nome": "Teste",
@@ -3521,7 +3521,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3530,7 +3530,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3539,7 +3539,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3548,7 +3548,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3557,7 +3557,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3566,7 +3566,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3575,7 +3575,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3584,7 +3584,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3593,7 +3593,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3602,7 +3602,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             },
             {
                 "nome": "Teste",
@@ -3611,7 +3611,7 @@
                 "defesa": 60,
                 "passe": 60,
                 "ball_control": 60,
-                "gols": 2
+                "gols": 0
             }
         ]
     }
