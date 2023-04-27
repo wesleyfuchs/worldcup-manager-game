@@ -13,8 +13,12 @@ class Team:
         self.lost = lost
         self.jogadores = jogadores
         self.players = []
+        self.reservas = []
         self.suspensos = []
         self.ball_possession = False
         
     def adicionar_jogador(self, jogador):
         self.players.append(jogador)
+        
+    def adicionar_reservas(self, jogador):
+        self.reservas.append(jogador)

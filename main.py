@@ -9,6 +9,43 @@ TEMPO_GROUP_STAGE = 91
 TEMPO_PLAYOFFS = 121
 
 
+def substituir_jogador(equipe):
+    print_escalacao(equipe)
+
+    # Solicita o número do jogador titular que será substituído
+    numero_titular = int(input("Digite o número do jogador titular que deseja substituir: "))
+
+    # Localiza o jogador titular correspondente e obtém sua posição original
+    for i, jogador in enumerate(equipe.players):
+        if jogador.numero == numero_titular:
+            jogador_titular = jogador
+            posicao_original = i
+            equipe.players.pop(i)
+            break
+
+    # Solicita o número do jogador reserva que irá substituir o titular
+    numero_reserva = int(input("Digite o número do jogador reserva que irá substituir o titular: "))
+
+    # Localiza o jogador reserva correspondente e insere na posição original do titular
+    for i, jogador in enumerate(equipe.reservas):
+        if jogador.numero == numero_reserva:
+            equipe.reservas.pop(i)
+            equipe.players.insert(posicao_original, jogador)
+            equipe.reservas.insert(i, jogador_titular)
+            break
+    
+    print_escalacao(equipe)  
+
+
+def print_escalacao(equipe):
+    print("--Titulares--")
+    for jogador in equipe.players:
+        print("{}   {} - {}".format(jogador.numero, jogador.nome, jogador.posicao))
+    print("--Reservas--")
+    for jogador in equipe.reservas:
+        print("{}   {} - {}".format(jogador.numero, jogador.nome, jogador.posicao))
+
+
 def zerar_pontuacao(database):
     '''Zera a pontuação de cada time'''
     for team in database:
@@ -69,41 +106,56 @@ def partidas(userteam, season, database, tempo_partida, fase):
             team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
             
             # Adiciona os jogadores do database às equipes
-            # for i, team_name in enumerate([team1.name, team2.name]):
-            #     for jogador in database[team_name]['jogadores']:
-            #         jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
-            #         if i == 0:
-            #             print(jogador.nome)
-            #             team1.adicionar_jogador(jogador)
-            #         else:
-            #             team2.adicionar_jogador(jogador)
             
-            # Loop team1
-            for jogador in database[team1.name]['jogadores'][:11]:
-                jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
-                team1.adicionar_jogador(jogador)
-
-            # Loop team2 
-            for jogador in database[team2.name]['jogadores'][:11]:
-                jogador = Jogador(jogador['nome'], jogador['posicao'], jogador['finalizacao'], jogador['defesa'], jogador['passe'], jogador['ball_control'], jogador['gols'])
-                team2.adicionar_jogador(jogador)
+            # Adiciona titulares
+            for i, team_name in enumerate([team1.name, team2.name]):
+                for jogador in database[team_name]['jogadores'][:11]:
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'])
+                    if i == 0:
+                        team1.adicionar_jogador(jogador)
+                    else:
+                        team2.adicionar_jogador(jogador)
+            
+            # Adiciona reservas            
+            for i, team_name in enumerate([team1.name, team2.name]):
+                for jogador in database[team_name]['jogadores'][12:]:
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'])
+                    if i == 0:
+                        team1.adicionar_reservas(jogador)
+                    else:
+                        team2.adicionar_reservas(jogador)
 
             match1.append(team1)
-            match1.append(team2)
+            match1.append(team2) 
 
             # Se o time do usuario estiver no matchbracket
             if userteam in match0:
+                print('1. Editar Escalação')
+                print('2. Usar Escalação Padão')
+                escalacao_choice = input("Gostaria de editar a escalação? ")
+                if escalacao_choice == "1":
+                    if userteam == match0[0]:
+                        while True:
+                            substituir_jogador(team1)
+                            print(" ")
+                            print("1. Sim")
+                            print("2. Não")
+                            mais_subistituicoes = input("Fazer mais mudanças? ")
+                            if mais_subistituicoes != "1":
+                                break
+                    else:
+                        while True:
+                            substituir_jogador(team2)
+                            print(" ")
+                            print("1. Sim")
+                            print("2. Não")
+                            mais_subistituicoes = input("Fazer mais mudanças? ")
+                            if mais_subistituicoes != "1":
+                                break
+                print(' ')
                 # Se o usuario escolher o modo Play:
                 if gamechoice == "1":
                     print(match0[0] + " vs " + match0[1])
-                    print(' ')
-                    print('1. Editar Escalação')
-                    print('2. Usar Escalação Padão')
-                    escalacao_choice = input("Gostaria de editar a escalação? ")
-                    if escalacao_choice == "1":
-                        if userteam == match0[0]:
-                            for jogador in team1.jogadores:
-                                print("{} - {}".format(jogador['nome'], jogador['posicao']))
                     print(' ')
                     matchday(match1, database, partida_rapida, tempo_partida, fase)
                     print(' ')
@@ -241,9 +293,9 @@ if userteamkey > 0 and userteamkey < 33:
         if userteamkey == database[team]['key']:
             userteam = database[team]['name']
             print('Voce escolheu: ' + database[team]['name'])
-            print('Escalação')
-            for jogador in database[team]['jogadores']:
-                print('-' + jogador['nome'])
+            # print('Escalação')
+            # for jogador in database[team]['jogadores']:
+            #     print('-' + jogador['nome'])
             input('Precione enter para começar! ')
             partidas(userteam, season, database, TEMPO_GROUP_STAGE, 'grupos')
 else:

@@ -1,12 +1,18 @@
 class Jogador:
-    def __init__(self, nome, posicao, finalizacao, defesa, passe, ball_control, gols):
+    def __init__(self, nome, numero, gols, posicao, finalizacao, defesa, interceptacao, penalty, passe, stamina, GK_skill, ball_control):
         self.nome = nome
+        self.numero = numero
+        self.gols = gols
         self.posicao = posicao
         self.finalizacao = finalizacao
         self.defesa = defesa
+        self.interceptacao = interceptacao
+        self.penalty = penalty
         self.passe = passe
+        self.stamina = stamina
+        self.GK_skill = GK_skill
         self.ball_control = ball_control
-        self.gols = gols
+        
         self.posse_de_bola = False
         self.cartao_amarelo = False
         self.cartao_vermelho = False
