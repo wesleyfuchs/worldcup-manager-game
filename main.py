@@ -8,7 +8,7 @@ from jogador import Jogador
 TEMPO_GROUP_STAGE = 91
 TEMPO_PLAYOFFS = 121
 
-
+#Adicionar verificacoes
 def substituir_jogador(equipe):
     print_escalacao(equipe)
 
@@ -22,7 +22,8 @@ def substituir_jogador(equipe):
             posicao_original = i
             equipe.players.pop(i)
             break
-
+        else: 
+            print("Numero não existe!!")
     # Solicita o número do jogador reserva que irá substituir o titular
     numero_reserva = int(input("Digite o número do jogador reserva que irá substituir o titular: "))
 
@@ -91,10 +92,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
             print('Seu proximo adversário sera: {}'.format(newweek[0][0]))
         
             
-        # Pergunta se o usuario ira jogar ou skippar o proximo jogo!
-        print("1. Jogar")
-        print("2. Skip")
-        gamechoice = input("Gostaria de Jogar ou Pular o jogo? ")
+        
 
         # Para cada match em uma week, configura o jogo usando versões temporarias da classe time
         for matchbrackets in newweek:
@@ -130,8 +128,14 @@ def partidas(userteam, season, database, tempo_partida, fase):
 
             # Se o time do usuario estiver no matchbracket
             if userteam in match0:
+                # Pergunta se o usuario ira jogar ou skippar o proximo jogo
+                print("1. Jogar")
+                print("2. Skip")
+                gamechoice = input("Gostaria de Jogar ou Pular o jogo? ")
+                print(" ")
+                # Pergunta se o usuario quer fazer alterações na escalação
                 print('1. Editar Escalação')
-                print('2. Usar Escalação Padão')
+                print('2. Usar Escalação Padrão')
                 escalacao_choice = input("Gostaria de editar a escalação? ")
                 if escalacao_choice == "1":
                     if userteam == match0[0]:
@@ -159,16 +163,16 @@ def partidas(userteam, season, database, tempo_partida, fase):
                     print(' ')
                     matchday(match1, database, partida_rapida, tempo_partida, fase)
                     print(' ')
-                    print('Gameweek: ' + str(gameweeknum))
-                    print(' ')
-                    input(' ')
+                    # print('Gameweek: ' + str(gameweeknum))
+                    # print(' ')
+                    input('Pressione algo para continuar..')
                 # Se o usuario escolher Skip (Modo Rapido):
                 else:
                     matchday(match1, database, partida_longa, tempo_partida, fase)
                     print(' ')
-                    print('Gameweek: ' + str(gameweeknum))
-                    print(' ')
-                    input(' ')
+                    # print('Gameweek: ' + str(gameweeknum))
+                    # print(' ')
+                    input('Pressione algo para continuar..')
             else:
                 matchday(match1, database, partida_longa, tempo_partida, fase)
 
@@ -176,7 +180,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
                 json.dump(database, json_file, indent=4)
                
         if fase == 'grupos':
-            input(' ')
+            input('Pressione algo para continuar..')
             print(' ')
             for grupos in grupos_dict:
                 createrichladder(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
