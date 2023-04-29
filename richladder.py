@@ -2,11 +2,6 @@ from rich.console import Console
 from rich.table import Table
 from rich import inspect
 
-import json
-
-with open('data/teams.txt') as f:
-    data = json.load(f)
-
 
 def createrichladder(data, leaguecolor, teamcolor, userteam, gameweek):
     '''Cria a tabela da fase de grupos'''

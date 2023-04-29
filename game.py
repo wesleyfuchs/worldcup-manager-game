@@ -112,7 +112,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
         qnt_jogadores_other_team = (len(other_team.players)- 1)
         
         # Execute as instruções para o jogador com a bola
-        if jogador_com_bola.posicao == 'goleiro':
+        if jogador_com_bola.posicao == 'GK':
             if quick_game == True:
                 jogador_com_bola.decisao_posse_de_bola()
                 jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
@@ -127,10 +127,10 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     event = " "
                     jogador_com_bola.decisao_posse_de_bola()
             # Disputa de bola
-            elif n1 <= 25:
+            elif n1 <= 20:
                 # Chance de troca da posse de bola
-                ball_possession_change = random.randint(0, 60)
-                if ball_possession_change < 20:
+                ball_possession_change = random.randint(0, 10)
+                if ball_possession_change < 8:
                     pass
                 else:
                     # Calcula a chance de manter a posse da bola
@@ -140,11 +140,10 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
             # Passar a bola
-            elif n1 <= 65:
+            elif n1 <= 75:
                 # Chance de errar o passe
-                # Posso utilizar uma variavel interceptação
                     ladrao_bola = other_team.players[random.randint(0,qnt_jogadores_other_team)]
-                    if jogador_com_bola.passe < ladrao_bola.defesa:
+                    if jogador_com_bola.passe < ladrao_bola.interceptacao:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
@@ -160,13 +159,13 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 if quick_game == True:
                     jogador_com_bola.chute()
                 current_team.chutes+=1
-                n4_1 = random.randint(1,100)
-                n4_2 = random.randint(50,100) 
+                n4_1 = random.randint(0,10)
+                n4_2 = random.randint(5,10) 
                 if n4_1 > n4_2:
-                    n5_1 = random.randint(1,100)
-                    n5_2 = random.randint(50,100)
+                    n5_1 = random.randint(0,50)
+                    n5_2 = random.randint(0,60)
                     current_team.chutes_gol+=1 
-                    if (jogador_com_bola.finalizacao + n5_1) > (other_team.players[0].defesa + n5_2):
+                    if (jogador_com_bola.finalizacao + n5_1) > (other_team.players[0].GK_skill + n5_2):
                         if quick_game == True:
                             goal(current_team, jogador_com_bola)
                         else:
