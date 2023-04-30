@@ -22,8 +22,6 @@ def substituir_jogador(equipe):
             posicao_original = i
             equipe.players.pop(i)
             break
-        else: 
-            print("Numero não existe!!")
     # Solicita o número do jogador reserva que irá substituir o titular
     numero_reserva = int(input("Digite o número do jogador reserva que irá substituir o titular: "))
 

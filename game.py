@@ -37,7 +37,7 @@ def quickgoal(team, jogador):
 def quickgoal_sofrido(team):
     team.goals_sofridos += 1
 
-
+#Refazer usando a variavel penalty
 def cobrança_penalty(match):
     for i in match:
         nVar_penalti = random.randint(0,4)
@@ -78,6 +78,8 @@ def matchday(match, json, quick_game, duracao_partida, fase):
     match[0].chutes_gol = 0
     match[1].chutes_gol = 0
     
+    gols_evento = []
+    
     #Joga um jogo por 90 mins
     for i in range(0, duracao_partida):
         if quick_game == True:
@@ -112,7 +114,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
         qnt_jogadores_other_team = (len(other_team.players)- 1)
         
         # Execute as instruções para o jogador com a bola
-        if jogador_com_bola.posicao == 'GK':
+        if jogador_com_bola.posicao == "GK":
             if quick_game == True:
                 jogador_com_bola.decisao_posse_de_bola()
                 jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
@@ -124,10 +126,10 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             # Nao acontece nada
             if n1 <= 5:
                 if quick_game == True:
-                    event = " "
+                    event = " "             
                     jogador_com_bola.decisao_posse_de_bola()
             # Disputa de bola
-            elif n1 <= 20:
+            elif n1 <= 30:
                 # Chance de troca da posse de bola
                 ball_possession_change = random.randint(0, 10)
                 if ball_possession_change < 8:
@@ -162,10 +164,12 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 n4_1 = random.randint(0,10)
                 n4_2 = random.randint(5,10) 
                 if n4_1 > n4_2:
-                    n5_1 = random.randint(0,50)
-                    n5_2 = random.randint(0,60)
+                    n5_1 = random.randint(0,100)
+                    n5_2 = random.randint(80,100)
                     current_team.chutes_gol+=1 
                     if (jogador_com_bola.finalizacao + n5_1) > (other_team.players[0].GK_skill + n5_2):
+                        event = str(i) + """' """ + str(jogador_com_bola.nome)
+                        gols_evento.append(event)
                         if quick_game == True:
                             goal(current_team, jogador_com_bola)
                         else:
@@ -183,7 +187,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     other_team.ball_possession = True
                     other_team.players[0].posse_de_bola = True
             #Falta
-            elif n1 < 99:
+            elif n1 <= 99:
                 n2_1 = random.randint(1,10) 
                 if n2_1 > 8:
                     # Cartao Amarelo
@@ -203,8 +207,10 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         #         jogador_red = other_team.players.pop(jogador_red_index)
                         #         other_team.suspensos.append(jogador_red)
                     # Cobrança falta
-                    n3_1 = random.randint(1,10)
+                    n3_1 = random.randint(0,10)
                     if n3_1 >= 9:
+                        event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Cobr. de Falta)"
+                        gols_evento.append(event)
                         current_team.chutes+=1
                         current_team.chutes_gol+=1
                         if quick_game == True: 
@@ -231,13 +237,15 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 else:
                     varteam = other_team
                     varlteam = current_team
-                #70% chance for a penalty to be given
-                if nVar > 4:
+                #60% Chance de penalty
+                if nVar > 5:
                     if quick_game == True:
                         print("Penalty para " + str(varteam.name) + "!")
-                    #75% chance to get a goal from penalty
-                    nVar_3 = random.randint(0,4)
-                    if nVar_3 > 1:
+                    nVar_2 = random.randint(0,100)
+                    nVar_3 = random.randint(50,100)
+                    if (jogador_com_bola.penalty + nVar_2) > (other_team.players[0].GK_skill + nVar_3):
+                        event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Penalty)"
+                        gols_evento.append(event)
                         if quick_game == True:
                             goal(varteam, jogador_com_bola)
                         else:
@@ -305,9 +313,9 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             # print(j)
             for i in json[t.name]["jogadores"]:
                 if i['nome'] == j.nome:
-                    # print(i)
-                    # print(j["nome"])
                     i["gols"] = j.gols
+                    # print(i)
+                    # print(j.nome)
                     # i["gols"] = 0
         contador_time +=1
 
@@ -350,14 +358,22 @@ def matchday(match, json, quick_game, duracao_partida, fase):
     team_1_percentage = (team_1_ball_possession / total_possession) * 100
 
     if quick_game == True:
+        print(' ')
+        
         #imprime a porcentagem de posse de bola de cada time
         print("Posse de bola para {}: {}%".format(match[0].name, round(team_0_percentage)))
         print("Posse de bola para {}: {}%".format(match[1].name, round(team_1_percentage)))
+        print(' ')
         
         #imprime os chutes
         print('Total de chutes {}: {}({})(ao gol)'.format(match[0].name, match[0].chutes, match[0].chutes_gol))
         print('Total de chutes {}: {}({})(ao gol)'.format(match[1].name, match[1].chutes, match[1].chutes_gol))
-    
+        print(' ')
+        
+        #Gols
+        for evento in gols_evento:
+            print(evento)
+        
         # for jogador in match[0].players:
         #     if jogador.gols > 0:
         #         print('{} Gols de {}'.format(jogador.gols, jogador.nome))
