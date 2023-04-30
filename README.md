@@ -8,7 +8,7 @@
 | :label: Tecnologias   | Python
 
 <!-- Capa da Vitrine.dev-->
-![fifa-world-cup-2022-see-which-teams-still-fight-for-title-in-qatar](https://user-images.githubusercontent.com/55562529/235335150-d0d2c164-f9a6-4396-a7c6-7cbf387f4f56.jpg)
+![fifa-world-cup-2022-see-which-teams-still-fight-for-title-in-qatar](https://user-images.githubusercontent.com/55562529/235335150-d0d2c164-f9a6-4396-a7c6-7cbf387f4f56.jpg#vitrinedev)
 
 
 ## Sobre o projeto 📚
