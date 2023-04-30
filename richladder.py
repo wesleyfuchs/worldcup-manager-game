@@ -3,7 +3,7 @@ from rich.table import Table
 from rich import inspect
 
 
-def createrichladder(data, leaguecolor, teamcolor, userteam, gameweek):
+def criar_tabela(data, leaguecolor, teamcolor, userteam, gameweek):
     '''Cria a tabela da fase de grupos'''
     
     table = Table(show_header=True, header_style=leaguecolor)

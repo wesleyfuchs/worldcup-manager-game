@@ -1,6 +1,6 @@
 import json
 from game import matchday
-from richladder import createrichladder
+from richladder import criar_tabela
 from team import Team
 from jogador import Jogador
 
@@ -71,7 +71,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
     leaguecolor = "red1"
     gameweeknum = 0
     for week in season:
-        #used to print gameweeks
+        
         gameweeknum += 1
 
         # newweek é criado para garantir que o time do usuario esteja sempre a frente dos outros para melhor legibilidade
@@ -181,7 +181,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
             input('Pressione algo para continuar..')
             print(' ')
             for grupos in grupos_dict:
-                createrichladder(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
+                criar_tabela(grupos, leaguecolor, teamcolor, userteam, gameweeknum)
             print(' ')
 
 

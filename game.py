@@ -229,7 +229,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 if quick_game == True:
                     print("VAR: Checando Possivel Penalty! 📺")
                     time.sleep(1)
-                #compares the random VAR number for each team plus their luck stat to determine who gets the penalty
+                #Checa com quem esta a bola para decidir para qual lado ira a decisão do VAR
                 nVar = random.randint(0,10)
                 if current_team.ball_possession:
                     varteam = current_team
@@ -242,7 +242,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     if quick_game == True:
                         print("Penalty para " + str(varteam.name) + "!")
                     nVar_2 = random.randint(0,100)
-                    nVar_3 = random.randint(50,100)
+                    nVar_3 = random.randint(20,100)
                     if (jogador_com_bola.penalty + nVar_2) > (other_team.players[0].GK_skill + nVar_3):
                         event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Penalty)"
                         gols_evento.append(event)
@@ -296,7 +296,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         quickcobrança_penalty(match)
     
     
-    #adds goals for each of the teams at the end
+    # Atualiza os gols marcados/gols sofridos de cada time
     for team in match:
         for i in json:
             if i == team.name:
@@ -305,7 +305,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 json[i]["goaldif"] += (team.goals - team.goals_sofridos)
      
 
-    # atualiza a lista de jogadores no arquivo JSON com os gols marcados na partida
+    # Atualiza a lista de jogadores no arquivo JSON com os gols marcados na partida
     contador_time = 0
     for t in match:
         # print('-----')
@@ -319,7 +319,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     # i["gols"] = 0
         contador_time +=1
 
-    #declaring winner, loser or a draw
+    # Declarando Vencedor, Perdedor e Empate
     winner = ""
     loser = ""
     draw = False
