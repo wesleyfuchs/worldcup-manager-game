@@ -57,30 +57,35 @@ def quickcobrança_penalty(match):
 
 
 def matchday(match, json, quick_game, duracao_partida, fase):
-    
     # Inicializa a posse de bola
     match[0].ball_possession = False
     match[1].ball_possession = False
     jogador_com_bola = None
-    ball_possession_start = random.randint(1,100)
+    ball_possession_start = random.randint(1, 100)
     if ball_possession_start > 50:
         match[0].ball_possession = True
         match[0].players[10].posse_de_bola = True
     else:
         match[1].ball_possession = True
         match[1].players[10].posse_de_bola = True
-    
-    # Inicializa contadores
+
+    # Inicializa contadores e estatísticas
     team_0_ball_possession = 0
     team_1_ball_possession = 0
     match[0].chutes = 0
     match[1].chutes = 0
     match[0].chutes_gol = 0
     match[1].chutes_gol = 0
-    
     gols_evento = []
-    
-    #Joga um jogo por 90 mins
+
+    # Estatísticas de jogadores
+    # for team in match:
+    #     for jogador in team.players:
+    #         jogador.assistencias = 0
+    #         jogador.passes_bem_sucedidos = 0
+    #         jogador.desarmes = 0
+
+    # Simulação da partida
     for i in range(0, duracao_partida):
         if quick_game == True:
             if i == 46:
@@ -112,7 +117,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 
         qnt_jogadores_current_team = (len(current_team.players) - 1)
         qnt_jogadores_other_team = (len(other_team.players)- 1)
-        
+
         # Execute as instruções para o jogador com a bola
         if jogador_com_bola.posicao == "GK":
             if quick_game == True:
@@ -141,7 +146,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         current_team.ball_possession = False
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
-            # Passar a bola
+        # Passar a bola
             elif n1 <= 75:
                 # Chance de errar o passe
                     ladrao_bola = other_team.players[random.randint(0,qnt_jogadores_other_team)]
@@ -156,7 +161,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         else:
                             jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
                             jogador_com_bola.passar_bola_quick(jogador_destino)
-            # Chute
+        # Chute
             elif n1 <= 95:
                 if quick_game == True:
                     jogador_com_bola.chute()
@@ -172,8 +177,14 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         gols_evento.append(event)
                         if quick_game == True:
                             goal(current_team, jogador_com_bola)
+                            if jogador_com_bola.assistindo:
+                                jogador_com_bola.assistindo.assistencias += 1
+                            jogador_com_bola.assistindo = None
                         else:
                             quickgoal(current_team, jogador_com_bola)
+                            if jogador_com_bola.assistindo:
+                                jogador_com_bola.assistindo.assistencias += 1
+                            jogador_com_bola.assistindo = None
                         quickgoal_sofrido(other_team)
                         current_team.ball_possession = False
                         other_team.ball_possession = True
@@ -186,6 +197,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     current_team.ball_possession = False
                     other_team.ball_possession = True
                     other_team.players[0].posse_de_bola = True
+
             #Falta
             elif n1 <= 99:
                 n2_1 = random.randint(1,10) 
@@ -261,8 +273,8 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             time.sleep(0.15)
             print(str(i) + """' """ + event)
         # print(n1)
+
     # Depois do fim da paritda
-    
     if fase == 'playoffs':
         #Penalidades Maximas   
         cobrancas_de_penalty = 5
@@ -305,7 +317,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 json[i]["goaldif"] += (team.goals - team.goals_sofridos)
      
 
-    # Atualiza a lista de jogadores no arquivo JSON com os gols marcados na partida
+    # Atualiza a lista de jogadores no arquivo JSON com os gols e assistencias marcados na partida
     contador_time = 0
     for t in match:
         # print('-----')
@@ -314,6 +326,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             for i in json[t.name]["jogadores"]:
                 if i['nome'] == j.nome:
                     i["gols"] = j.gols
+                    i["assistencias"] = j.assistencias
                     # print(i)
                     # print(j.nome)
                     # i["gols"] = 0
@@ -359,8 +372,8 @@ def matchday(match, json, quick_game, duracao_partida, fase):
 
     if quick_game == True:
         print(' ')
-        
-        #imprime a porcentagem de posse de bola de cada time
+
+    #imprime a porcentagem de posse de bola de cada time
         print("Posse de bola para {}: {}%".format(match[0].name, round(team_0_percentage)))
         print("Posse de bola para {}: {}%".format(match[1].name, round(team_1_percentage)))
         print(' ')

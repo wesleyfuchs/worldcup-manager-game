@@ -1,12 +1,25 @@
 import json
-from game import matchday
-from richladder import criar_tabela
-from team import Team
-from jogador import Jogador
+from controllers.game import matchday
+from views.richladder import criar_tabela
+from models.team import Team
+from models.jogador import Jogador
+from controllers.database import load_data, save_data, zerar_pontuacao, reset_player_stats, reset_team_stats, ordenar_fase_final, listar_equipes
+
 
 # Tempo de duracao das partidas
 TEMPO_GROUP_STAGE = 91
 TEMPO_PLAYOFFS = 121
+
+# Carregar o banco de dados
+database = load_data('data/teams_jogadores.txt')
+
+# Resetar estatísticas
+reset_team_stats(database)
+reset_player_stats(database)
+zerar_pontuacao(database)
+
+# Salva as alterações de volta no arquivo json
+save_data('data/teams_jogadores.txt', database)
 
 #Adicionar verificacoes
 def substituir_jogador(equipe):
@@ -45,12 +58,6 @@ def print_escalacao(equipe):
         print("{}   {} - {}".format(jogador.numero, jogador.nome, jogador.posicao))
 
 
-def zerar_pontuacao(database):
-    '''Zera a pontuação de cada time'''
-    for team in database:
-        database[team]['score'] = 0
-
-
 def mostrar_pontuacao_times(database):
     '''print da pontuação dos times'''
     print('----')
@@ -64,7 +71,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
     partida_rapida = True
     partida_longa = False
     
-    with open('data/teams_jogadores.txt', 'w') as json_file:
+    with open('data/teams_jogadores.txt', 'w', encoding='utf-8') as json_file:
         json.dump(database, json_file, indent=4)
 
     teamcolor = "dark_olive_green3 bold italic"
@@ -106,7 +113,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
             # Adiciona titulares
             for i, team_name in enumerate([team1.name, team2.name]):
                 for jogador in database[team_name]['jogadores'][:11]:
-                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'])
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'], jogador['assistencias'])
                     if i == 0:
                         team1.adicionar_jogador(jogador)
                     else:
@@ -115,7 +122,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
             # Adiciona reservas            
             for i, team_name in enumerate([team1.name, team2.name]):
                 for jogador in database[team_name]['jogadores'][12:]:
-                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'])
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'], jogador['assistencias'])
                     if i == 0:
                         team1.adicionar_reservas(jogador)
                     else:
@@ -185,28 +192,6 @@ def partidas(userteam, season, database, tempo_partida, fase):
             print(' ')
 
 
-def ordenar_fase_final(confrontos):
-    '''Ordena os times por pontuação e depois por saldo de gols'''
-    selecoes_ordenado = []
-    for grupos in confrontos:
-        dicc = {}
-        for team in grupos:
-            dicc[grupos[team]['name']] = (
-                grupos[team]["score"], grupos[team]["goaldif"])
-
-        sorteddicc = sorted(dicc, key=lambda x: (-dicc[x][0], -dicc[x][1]))
-        selecoes_ordenado.append(sorteddicc)
-    return selecoes_ordenado
-
-
-def listar_equipes(lista_de_partidas):
-    equipes_database = []
-    for confronto in lista_de_partidas:
-        quartas = {k: database[k] for k in confronto}
-        equipes_database.append(quartas)
-    return equipes_database
-
-
 def realizar_etapa_final(equipes, num_equipes_proxima_etapa, database):
     '''Cria os matchbrackets e realiza as partidas'''
     
@@ -229,7 +214,7 @@ def realizar_etapa_final(equipes, num_equipes_proxima_etapa, database):
     return resultado_partidas
 
 
-with open('data/teams_jogadores.txt') as f:
+with open('data/teams_jogadores.txt', encoding='utf-8') as f:
     database = json.load(f)
 
 # Lista dos grupos
@@ -251,25 +236,7 @@ season = [[('Catar', 'Equador'), ('Senegal', 'Holanda'), ('Inglaterra', 'Ira'), 
           [('Catar', 'Holanda'), ('Equador', 'Senegal'), ('Inglaterra', 'Pais de Gales'), ('Ira', 'Estados Unidos'), ('Argentina', 'Polonia'), ('Arabia Saudita', 'Mexico'), ('Franca', 'Tunisia'), ('Australia', 'Dinamarca'), ('Espanha', 'Japao'), ('Costa Rica', 'Alemanha'), ('Belgica', 'Croacia'), ('Canada', 'Marrocos'), ('Brasil', 'Camaroes'), ('Servia', 'Suica'), ('Portugal', 'Coreia do Sul'), ('Gana', 'Uruguai')]]
 
 
-# Zera todos dados dos times
-for team in database:
-    database[team]['goaldif'] = 0
-    database[team]['goals'] = 0
-    database[team]['goals_sofridos'] = 0
-    database[team]['won'] = 0
-    database[team]['drawn'] = 0
-    database[team]['lost'] = 0
 
-for team in database:
-    for jogador in database[team]['jogadores']:
-        jogador['gols'] = 0
-
-# Salva as alterações de volta no arquivo json
-with open('data/teams_jogadores.txt', 'w') as f:
-    json.dump(database, f)
-
-# Zera pontuacao dos times
-zerar_pontuacao(database)
 
 
 # Menu com numero de cada time
@@ -335,14 +302,14 @@ print(" ")
 print('###############################')
 print('###### Quartas de Finais ######')
 print('###############################')
-quartas_de_final = realizar_etapa_final(listar_equipes(lista_round_16), 8, database)
+quartas_de_final = realizar_etapa_final(listar_equipes(lista_round_16, database), 8, database)
 
 # Semi Finais
 print(" ")
 print('###############################')
 print('######### Semi Finais #########')
 print('###############################')
-semi_finais = realizar_etapa_final(listar_equipes(quartas_de_final), 4, database)
+semi_finais = realizar_etapa_final(listar_equipes(quartas_de_final, database), 4, database)
 
 # Final
 print(" ")
@@ -350,4 +317,4 @@ print('###############################')
 print("############ Final ###########")
 print('###############################')
 
-final = realizar_etapa_final(listar_equipes(semi_finais), 2, database)
+final = realizar_etapa_final(listar_equipes(semi_finais, database), 2, database)
