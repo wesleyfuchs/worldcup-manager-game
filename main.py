@@ -4,6 +4,12 @@ from views.richladder import criar_tabela
 from models.team import Team
 from models.jogador import Jogador
 from controllers.database import load_data, save_data, zerar_pontuacao, reset_player_stats, reset_team_stats, ordenar_fase_final, listar_equipes
+from logging_config import setup_logging
+import logging
+
+# Configurar logs
+setup_logging()
+logging.info("Programa iniciado.")
 
 
 # Tempo de duracao das partidas
@@ -12,6 +18,7 @@ TEMPO_PLAYOFFS = 121
 
 # Carregar o banco de dados
 database = load_data('data/teams_jogadores.txt')
+logging.info(f"Banco de dados carregado com {len(database)} times.")
 
 # Resetar estatísticas
 reset_team_stats(database)
@@ -133,6 +140,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
 
             # Se o time do usuario estiver no matchbracket
             if userteam in match0:
+                logging.info(f"Partida iniciada: {team1.name} vs {team2.name}.")
                 # Pergunta se o usuario ira jogar ou skippar o proximo jogo
                 print("1. Jogar")
                 print("2. Skip")
