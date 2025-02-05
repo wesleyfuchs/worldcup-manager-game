@@ -10,6 +10,76 @@ from rich.table import Table
 # Configurar logs
 setup_logging()
 
+def atualizar_estatisticas_time(team, json):
+    """
+    Atualiza estatísticas do time no JSON (gols, gols sofridos, saldo de gols).
+
+    Parâmetros:
+        team (Team): O time que teve suas estatísticas alteradas.
+        json (dict): O banco de dados contendo informações dos times.
+    """
+    if team.name in json:
+        json[team.name]["goals"] += team.goals
+        json[team.name]["goals_sofridos"] += team.goals_sofridos
+        json[team.name]["goaldif"] += (team.goals - team.goals_sofridos)
+
+        # logging.info(f"📊 Estatísticas do {team.name} atualizadas: {json[team.name]}")
+
+
+def atualizar_estatisticas_jogadores(team, json):
+    """
+    Atualiza estatísticas dos jogadores no JSON.
+
+    Parâmetros:
+        team (Team): O time ao qual os jogadores pertencem.
+        json (dict): O banco de dados contendo informações dos times e jogadores.
+    """
+    for jogador in team.players:
+        for jogador_json in json[team.name]["jogadores"]:
+            if jogador_json["nome"] == jogador.nome:
+                jogador_json["gols"] = jogador.gols
+                jogador_json["assistencias"] = jogador.assistencias
+                jogador_json["cartoes_amarelos"] = jogador.cartoes_amarelos
+                jogador_json["cartoes_vermelhos"] = jogador.cartoes_vermelhos
+                jogador_json["partidas_suspenso"] = jogador.partidas_suspenso
+
+                # logging.info(f"🎯 Estatísticas de {jogador.nome} atualizadas: {jogador_json}")
+
+
+def remover_suspensoes(team, database, suspensos_antes_partida):
+    """
+    Remove jogadores suspensos após cumprirem sua suspensão.
+    
+    Parâmetros:
+        team (Team): O time que terá jogadores liberados da suspensão.
+        database (dict): O banco de dados contendo informações dos times e jogadores.
+    """
+    if not hasattr(team, "suspensos") or not team.suspensos:
+        return  # Sai da função se não houver suspensos
+
+    print(f"\n🔎 Time: {team.name}")
+    print(f"📌 Suspensos antes: {team.suspensos}")
+
+    jogadores_a_remover = []
+
+    # Percorre os jogadores suspensos diretamente no banco de dados
+    for jogador_nome in suspensos_antes_partida: # Apenas jogadores suspensos antes do jogo
+        for jogador in database[team.name]["jogadores"]:
+            if jogador["nome"] == jogador_nome:
+                jogador["partidas_suspenso"] -= 1  # Reduz a suspensão no JSON
+                print(f"✅ Reduzindo suspensão de {jogador['nome']} → {jogador['partidas_suspenso']} partidas restantes")
+
+                if jogador["partidas_suspenso"] <= 0:
+                    jogadores_a_remover.append(jogador_nome)
+
+    # Remove jogadores que cumpriram a suspensão
+    for jogador_nome in jogadores_a_remover:
+        team.suspensos.remove(jogador_nome)
+        logging.info(f"✅ {jogador_nome} cumpriu sua suspensão e está disponível para jogar.")
+
+    print(f"📌 Suspensos após: {team.suspensos}")
+
+
 def aplicar_suspensao(jogador, team):
     """
     Adiciona o jogador à lista de suspensos e controla suspensão por acúmulo de amarelos.
@@ -19,17 +89,19 @@ def aplicar_suspensao(jogador, team):
         team (Team): O time ao qual o jogador pertence.
     """
 
-    if not hasattr(team, "suspensos"):  # Garante que a lista de suspensos existe
-        team.suspensos = []
+    # if not hasattr(team, "suspensos"):  # Garante que a lista de suspensos existe
+    #     team.suspensos = []
 
     # 🔥 Se o jogador recebeu um cartão vermelho, ele é suspenso automaticamente
-    if jogador.cartao_vermelho and jogador.nome not in team.suspensos:
+    if jogador.cartoes_vermelhos_na_partida >= 1 and jogador.nome not in team.suspensos:
         team.suspensos.append(jogador.nome)  # Armazena apenas o nome do jogador
+        jogador.partidas_suspenso += 1
         logging.info(f"🚫 {jogador.nome} está suspenso para a próxima partida do {team.name} por expulsão.")
 
     # 🔥 Se acumulou 3 amarelos ao longo das partidas, é suspenso na próxima
     elif jogador.cartoes_amarelos >= 3 and jogador.nome not in team.suspensos:
         team.suspensos.append(jogador.nome)
+        jogador.partidas_suspenso += 1
         logging.info(f"🚫 {jogador.nome} está suspenso para a próxima partida do {team.name} por acúmulo de 3 amarelos.")
         jogador.cartoes_amarelos = 0  # Reseta os amarelos APÓS a suspensão ser aplicada
 
@@ -45,16 +117,15 @@ def registrar_cartao(jogador, tipo, team, exibir_eventos=True):
         exibir_eventos (bool): Se True, imprime o evento no console.
     """
 
-    if jogador.cartao_vermelho:
-        logging.warning(f"Tentativa de dar um cartão para {jogador.nome}, mas ele já foi expulso!")
-        return  
+    # if jogador.cartao_vermelho:
+    #     logging.warning(f"Tentativa de dar um cartão para {jogador.nome}, mas ele já foi expulso!")
+    #     return  
 
     if tipo == "amarelo":
         jogador.recebeu_cartao_amarelo()
 
         if jogador.cartoes_amarelos_na_partida == 2:
             # 🔥 Se for o segundo amarelo NA MESMA PARTIDA, vira vermelho
-            jogador.cartao_vermelho = True
             jogador.cartoes_vermelhos += 1  
             
             logging.info(f"🟡🟡 {jogador.nome} recebeu o segundo amarelo na mesma partida e foi expulso! 🔴")
@@ -75,7 +146,6 @@ def registrar_cartao(jogador, tipo, team, exibir_eventos=True):
 
     elif tipo == "vermelho":
         jogador.recebeu_cartao_vermelho()
-        jogador.cartao_vermelho = True
         
         logging.info(f"🔴 Cartão Vermelho direto! {jogador.nome} foi expulso do time {team.name}.")
 
@@ -180,6 +250,20 @@ def inicializar_contadores(match):
     return contadores
 
 
+def gerenciar_tempo(minuto, match, quick_game):
+    if quick_game:
+        if minuto == 46:
+            print("Intervalo! ⏱️")
+        elif minuto == 92:
+            print("Fim do Tempo Regulamentar! ⏱️")
+            if match[0].goals != match[1].goals:
+                return
+            else:
+                print("Prorrogação!!")
+        elif minuto == 106:
+            print("Intervalo! ⏱️")
+
+
 def matchday(match, json, quick_game, duracao_partida, fase):
     """
     Simula uma partida entre dois times.
@@ -192,6 +276,13 @@ def matchday(match, json, quick_game, duracao_partida, fase):
         fase (str): Define se a partida é de fase de grupos ou mata-mata.
     """
     logging.info(f"Iniciando partida: {match[0].name} vs {match[1].name}")
+
+    team1 = match[0]
+    team2 = match[1]
+
+    suspensos_antes_partida_team1 = team1.suspensos.copy()
+    suspensos_antes_partida_team2 = team2.suspensos.copy()
+
     
     # Define quem começa com a bola (meia central preferido no início do jogo)
     time_inicial = random.choice(match)
@@ -199,18 +290,8 @@ def matchday(match, json, quick_game, duracao_partida, fase):
     contadores = inicializar_contadores(match)
 
     # Simulação da partida
-    for i in range(0, duracao_partida):
-        if quick_game == True:
-            if i == 46:
-                print('Intervalo! ⏱️')
-            elif i == 92:
-                print('Fim do Tempo Regulamentar! ⏱️')
-                if match[0].goals > match[1].goals or match[0].goals < match[1].goals: 
-                    break
-                else:
-                    print('Prorrogação!!')
-            elif i == 106:
-                print('Intervalo! ⏱️')
+    for minuto in range(duracao_partida):
+        gerenciar_tempo(minuto, match, quick_game)
                 
         n1 = random.randint(1, 100)
         event = ""
@@ -284,7 +365,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     n5_2 = random.randint(80,100)
                     current_team.chutes_gol+=1 
                     if (jogador_com_bola.finalizacao + n5_1) > (other_team.players[0].GK_skill + n5_2):
-                        event = str(i) + """' """ + str(jogador_com_bola.nome)
+                        event = str(minuto) + """' """ + str(jogador_com_bola.nome)
                         contadores["gols_evento"].append(event)
                         if quick_game == True:
                             registrar_gol(current_team, jogador_com_bola, exibir_eventos=True)  # Exibe o gol e registra no log
@@ -311,20 +392,17 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             #Falta
             elif n1 <= 99:
                 if random.randint(1, 10) >= 8:  # Chance de falta que gera cartão
-                    jogadores_disponiveis = [j for j in other_team.players if not j.cartao_vermelho]
+                    jogadores_disponiveis = [j for j in other_team.players]
                     if jogadores_disponiveis:
                         jogador_faltoso = random.choice(jogadores_disponiveis)
                         if random.randint(1, 100) >= 85:
-                            print('vermelho')
-                            pass
-                            # registrar_cartao(jogador_faltoso, "vermelho", other_team, exibir_eventos=quick_game)
+                            registrar_cartao(jogador_faltoso, "vermelho", other_team, exibir_eventos=quick_game)
                         else:
-                            print('amarelo')
                             registrar_cartao(jogador_faltoso, "amarelo", other_team, exibir_eventos=quick_game)
                     # Cobrança falta
                     n3_1 = random.randint(0,10)
                     if n3_1 >= 9:
-                        event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Cobr. de Falta)"
+                        event = str(minuto) + """' """ + str(jogador_com_bola.nome) + " (Cobr. de Falta)"
                         contadores["gols_evento"].append(event)
                         current_team.chutes+=1
                         current_team.chutes_gol+=1
@@ -358,7 +436,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     nVar_2 = random.randint(0,100)
                     nVar_3 = random.randint(20,100)
                     if (jogador_com_bola.penalty + nVar_2) > (other_team.players[0].GK_skill + nVar_3):
-                        event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Penalty)"
+                        event = str(minuto) + """' """ + str(jogador_com_bola.nome) + " (Penalty)"
                         contadores["gols_evento"].append(event)
                         if quick_game == True:
                             registrar_gol(varteam, jogador_com_bola, exibir_eventos=True)  # Exibe o gol e registra no log
@@ -375,7 +453,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         print("Penalty não marcado! ❌")
         if quick_game == True:
             time.sleep(0.15)
-            print(str(i) + """' """ + event)
+            print(str(minuto) + """' """ + event)
         # print(n1)
 
     # Depois do fim da paritda
@@ -411,15 +489,21 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     else:
                         quickcobrança_penalty(match)
     
-    
-    # Atualiza os gols marcados/gols sofridos de cada time
+    remover_suspensoes(team1, json, suspensos_antes_partida_team1)
+    remover_suspensoes(team2, json, suspensos_antes_partida_team2)
+
+    # 🔥 Após o jogo: Atualizar estatísticas de cada time e jogadores
+    atualizar_estatisticas_time(team1, json)
+    atualizar_estatisticas_time(team2, json)
+
+    atualizar_estatisticas_jogadores(team1, json)
+    atualizar_estatisticas_jogadores(team2, json)
+
+
+    # Atualiza a lista de suspensos
     for team in match:
         for i in json:
             if i == team.name:
-                json[i]["goals"] += team.goals 
-                json[i]["goals_sofridos"] += team.goals_sofridos
-                json[i]["goaldif"] += (team.goals - team.goals_sofridos)
-
                 # Se não existir "suspensos", cria a chave no JSON
                 if "suspensos" not in json[i]:
                     json[i]["suspensos"] = []
@@ -433,17 +517,19 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                         json[i]["suspensos"].append(nome)  # Adiciona apenas o nome do jogador
      
 
-    # Atualiza a lista de jogadores no arquivo JSON com os gols, assistências e cartões
-    for team in match:
-        for jogador in team.players + [j for j in team.suspensos if isinstance(j, Jogador)]:
-            for i in json[team.name]["jogadores"]:
-                if i["nome"] == jogador.nome:
-                    i["gols"] = jogador.gols
-                    i["assistencias"] = jogador.assistencias
-                    i["cartoes_amarelos"] = jogador.cartoes_amarelos
-                    i["cartoes_vermelhos"] = jogador.cartoes_vermelhos
-                    i["cartoes_amarelos_na_partida"] = 0
+    # # Atualiza a lista de jogadores no arquivo JSON com os gols, assistências e cartões
+    # for team in match:
+    #     for jogador in team.players + [j for j in team.suspensos if isinstance(j, Jogador)]:
+    #         for i in json[team.name]["jogadores"]:
+    #             if i["nome"] == jogador.nome:
+    #                 i["gols"] = jogador.gols
+    #                 i["assistencias"] = jogador.assistencias
+    #                 i["cartoes_amarelos"] = jogador.cartoes_amarelos
+    #                 i["cartoes_vermelhos"] = jogador.cartoes_vermelhos
+    #                 i["cartoes_amarelos_na_partida"] = 0
+    #                 i["cartoes_vermelhos_na_partida"] = 0
 
+    
     # Declarando Vencedor, Perdedor e Empate
     winner = ""
     loser = ""

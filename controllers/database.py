@@ -37,8 +37,9 @@ def reset_player_stats(database):
         for jogador in database[team]['jogadores']:
             jogador['gols'] = 0
             jogador['assistencias'] = 0
-            jogador['cartoes_amarelos'] = 2
+            jogador['cartoes_amarelos'] = 0
             jogador['cartoes_vermelhos'] = 0
+            jogador['partidas_suspenso'] = 0
 
 def ordenar_fase_final(confrontos):
     '''Ordena os times por pontuação e depois por saldo de gols'''

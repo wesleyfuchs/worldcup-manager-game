@@ -211,7 +211,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
                 for jogador in database[team_name]['jogadores'][:11]:
                     jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'],
                                        jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], 
-                                       jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'])
+                                       jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'], jogador['partidas_suspenso'])
                     if i == 0:
                         team1.adicionar_jogador(jogador)
                     else:
@@ -222,7 +222,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
                 for jogador in database[team_name]['jogadores'][12:]:
                     jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], 
                                       jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], 
-                                      jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'])
+                                      jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'], jogador['partidas_suspenso'])
                     if i == 0:
                         team1.adicionar_reservas(jogador)
                     else:
@@ -234,7 +234,7 @@ def partidas(userteam, season, database, tempo_partida, fase):
 
             match1.append(team1)
             match1.append(team2)  
-
+            
             # Se o time do usuario estiver no matchbracket
             if userteam in match0:
                 logging.info(f"Partida iniciada: {team1.name} vs {team2.name}.")
@@ -285,7 +285,6 @@ def partidas(userteam, season, database, tempo_partida, fase):
                     input('Pressione algo para continuar..')
             else:
                 matchday(match1, database, partida_longa, tempo_partida, fase)
-
 
         save_data('data/teams_jogadores.txt', database)
 
