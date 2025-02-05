@@ -2,10 +2,10 @@ import logging
 
 def setup_logging():
     logging.basicConfig(
-        level=logging.DEBUG,  # Alterar para INFO ou WARNING em produção
+        level=logging.DEBUG,
         format="%(asctime)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler("game.log"),  # Salvar logs em arquivo
-            logging.StreamHandler()          # Mostrar logs no console
+            logging.FileHandler("game.log", encoding="utf-8"),  # Configuração para Unicode
+            logging.StreamHandler()  # Exibe os logs no console
         ]
     )

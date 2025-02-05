@@ -1,5 +1,5 @@
 class Jogador:
-    def __init__(self, nome, numero, gols, posicao, finalizacao, defesa, interceptacao, penalty, passe, stamina, GK_skill, ball_control, assistencias):
+    def __init__(self, nome, numero, gols, posicao, finalizacao, defesa, interceptacao, penalty, passe, stamina, GK_skill, ball_control, assistencias, cartoes_amarelos, cartoes_vermelhos):
         self.nome = nome
         self.numero = numero
         self.gols = gols
@@ -14,14 +14,23 @@ class Jogador:
         self.ball_control = ball_control
 
         self.posse_de_bola = False
-        self.cartao_amarelo = False
+        self.cartoes_amarelos = cartoes_amarelos 
+        self.cartoes_vermelhos = cartoes_vermelhos
+        self.cartoes_amarelos_na_partida = 0
         self.cartao_vermelho = False
 
-        # Novos atributos
         self.assistencias = assistencias
         self.passes_bem_sucedidos = 0
         self.desarmes = 0
         self.assistindo = None  # Jogador que passou a bola para este jogador
+
+
+    def recebeu_cartao_amarelo(self):
+        self.cartoes_amarelos += 1
+        self.cartoes_amarelos_na_partida +=1
+
+    def recebeu_cartao_vermelho(self):
+        self.cartoes_vermelhos += 1
 
     def passar_bola(self, jogador):
         # Passar a bola para outro jogador

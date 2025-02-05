@@ -1,6 +1,6 @@
 
 class Team:
-    def __init__(self, key, name, score, penalti_goals, goaldif, goals, goals_sofridos, won, drawn, lost, jogadores):
+    def __init__(self, key, name, score, penalti_goals, goaldif, goals, goals_sofridos, won, drawn, lost, jogadores, suspensos):
         self.key = key
         self.name = name
         self.score = score
@@ -14,7 +14,7 @@ class Team:
         self.jogadores = jogadores
         self.players = []
         self.reservas = []
-        self.suspensos = []
+        self.suspensos = suspensos
         self.ball_possession = False
         
     def adicionar_jogador(self, jogador):

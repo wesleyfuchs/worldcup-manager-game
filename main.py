@@ -11,7 +11,6 @@ import logging
 setup_logging()
 logging.info("Programa iniciado.")
 
-
 # Tempo de duracao das partidas
 TEMPO_GROUP_STAGE = 91
 TEMPO_PLAYOFFS = 121
@@ -28,32 +27,72 @@ zerar_pontuacao(database)
 # Salva as alterações de volta no arquivo json
 save_data('data/teams_jogadores.txt', database)
 
-#Adicionar verificacoes
-def substituir_jogador(equipe):
-    print_escalacao(equipe)
 
-    # Solicita o número do jogador titular que será substituído
-    numero_titular = int(input("Digite o número do jogador titular que deseja substituir: "))
+def substituir_jogador(team):
+    """
+    Permite ao usuário substituir um jogador suspenso ou titular.
+    """
+    while True:
+        print(f"\n🔄 Substituições para {team.name}:")
+        print("Titulares:")
+        for jogador in team.players:
+            print(f"{jogador.numero} - {jogador.nome}")
 
-    # Localiza o jogador titular correspondente e obtém sua posição original
-    for i, jogador in enumerate(equipe.players):
-        if jogador.numero == numero_titular:
-            jogador_titular = jogador
-            posicao_original = i
-            equipe.players.pop(i)
-            break
-    # Solicita o número do jogador reserva que irá substituir o titular
-    numero_reserva = int(input("Digite o número do jogador reserva que irá substituir o titular: "))
+        print("\nReservas:")
+        for jogador in team.reservas:
+            print(f"{jogador.numero} - {jogador.nome}")
 
-    # Localiza o jogador reserva correspondente e insere na posição original do titular
-    for i, jogador in enumerate(equipe.reservas):
-        if jogador.numero == numero_reserva:
-            equipe.reservas.pop(i)
-            equipe.players.insert(posicao_original, jogador)
-            equipe.reservas.insert(i, jogador_titular)
-            break
-    
-    print_escalacao(equipe)  
+        numero_titular = input("\nDigite o número do jogador titular que deseja substituir (ou pressione Enter para cancelar): ").strip()
+        
+        # 📌 Se o usuário pressionar Enter sem digitar nada, cancelar a substituição
+        if not numero_titular:
+            print("❌ Substituição cancelada.")
+            return
+
+        # 📌 Verificar se a entrada é um número válido
+        if not numero_titular.isdigit():
+            print("⚠️ Entrada inválida! Digite um número correspondente a um jogador titular.")
+            continue  # Perguntar novamente
+
+        numero_titular = int(numero_titular)
+
+        # 📌 Encontrar o jogador titular pelo número
+        jogador_titular = next((j for j in team.players if j.numero == numero_titular), None)
+
+        if not jogador_titular:
+            print("⚠️ Número inválido! O jogador não está na lista de titulares.")
+            continue
+
+        # 📌 Se não houver reservas, não há substituições disponíveis
+        if not team.reservas:
+            print("⚠️ Nenhum reserva disponível para substituição.")
+            return
+
+        # 📌 Mostrar opções de substituição
+        print("\nEscolha um reserva para substituir:")
+        for i, jogador_reserva in enumerate(team.reservas, start=1):
+            print(f"{i}. {jogador_reserva.nome}")
+
+        numero_reserva = input("\nDigite o número do reserva escolhido: ").strip()
+
+        if not numero_reserva.isdigit():
+            print("⚠️ Entrada inválida! Digite um número correspondente a um reserva.")
+            continue
+
+        numero_reserva = int(numero_reserva) - 1
+
+        if numero_reserva < 0 or numero_reserva >= len(team.reservas):
+            print("⚠️ Número inválido! Escolha um reserva da lista.")
+            continue
+
+        # 📌 Substituir o jogador titular pelo reserva escolhido
+        jogador_substituto = team.reservas.pop(numero_reserva)
+        team.players.remove(jogador_titular)
+        team.players.append(jogador_substituto)
+
+        print(f"✅ {jogador_titular.nome} foi substituído por {jogador_substituto.nome}.")
+
+        return  # Sai da função após uma substituição bem-sucedida
 
 
 def print_escalacao(equipe):
@@ -73,13 +112,65 @@ def mostrar_pontuacao_times(database):
               " - " + str(database[team]["score"]))
     print('----')
 
+
+def verificar_suspensoes(team, database, userteam):
+    """
+    Remove jogadores suspensos da escalação antes da partida.
+    Substitui automaticamente jogadores suspensos para times da CPU.
+    
+    Parâmetros:
+        team (Team): O time a ser verificado.
+        database (dict): O banco de dados contendo informações dos times e jogadores.
+    """
+
+    # if not hasattr(team, "suspensos"):
+    #     team.suspensos = []
+
+    jogadores_disponiveis = []
+    jogadores_suspensos = []
+
+    # Separar jogadores suspensos e disponíveis
+    for jogador in team.players:
+        if jogador.nome in team.suspensos:
+            jogadores_suspensos.append(jogador)
+        else:
+            jogadores_disponiveis.append(jogador)
+
+    # 🔍 Debug: Exibir jogadores suspensos e disponíveis
+    print(f"\n🔎 {team.name} - Jogadores suspensos: {[j.nome for j in jogadores_suspensos]}")
+    print(f"🔎 {team.name} - Jogadores disponíveis antes da substituição: {[j.nome for j in jogadores_disponiveis]}")
+
+    # Para times da CPU, substituir automaticamente os suspensos
+    if team.name != userteam:
+        for jogador_suspenso in jogadores_suspensos:
+            logging.info(f"{jogador_suspenso.nome} está suspenso e será substituído automaticamente no {team.name}.")
+            
+            if team.reservas:
+                substituto = team.reservas.pop(0)
+                jogadores_disponiveis.append(substituto)
+                print(f"✅ {team.name} - {jogador_suspenso.nome} foi substituído por {substituto.nome}.")
+
+    # 📌 Se for o time do usuário, obrigá-lo a substituir manualmente
+    else:
+        if jogadores_suspensos:
+            print(f"\n⚠️ Os seguintes jogadores estão suspensos e não podem jogar: {', '.join([j.nome for j in jogadores_suspensos])}")
+            print("Você deve substituí-los antes de iniciar a partida.")
+
+            while jogadores_suspensos:
+                substituir_jogador(team)  # Chama a função de substituição
+                jogadores_suspensos = [j for j in jogadores_suspensos if j.nome in [p.nome for p in team.players]]
+    
+    # Atualiza a lista de titulares
+    team.players = jogadores_disponiveis
+
+    # 🔍 Debug: Exibir a nova lista de titulares após substituição
+    print(f"🔎 {team.name} - Titulares após substituições: {[j.nome for j in team.players]}\n")
+
+
 #Arrumar o quickgame(nomes invertidos)
 def partidas(userteam, season, database, tempo_partida, fase):
     partida_rapida = True
     partida_longa = False
-    
-    with open('data/teams_jogadores.txt', 'w', encoding='utf-8') as json_file:
-        json.dump(database, json_file, indent=4)
 
     teamcolor = "dark_olive_green3 bold italic"
     leaguecolor = "red1"
@@ -104,23 +195,23 @@ def partidas(userteam, season, database, tempo_partida, fase):
             print('Seu proximo adversário sera: {}'.format(newweek[0][0]))
         
             
-        
-
         # Para cada match em uma week, configura o jogo usando versões temporarias da classe time
         for matchbrackets in newweek:
             match0 = []
             match1 = []
             for team in matchbrackets:
                 match0.append(team)
-            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['jogadores'])
-            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'])
+
+            team1 = Team(0, str(match0[0]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[0]]['jogadores'], database[match0[0]]['suspensos'])
+            team2 = Team(0, str(match0[1]), 0, 0, 0, 0, 0, 0, 0, 0, database[match0[1]]['jogadores'], database[match0[1]]['suspensos'])
             
             # Adiciona os jogadores do database às equipes
-            
             # Adiciona titulares
             for i, team_name in enumerate([team1.name, team2.name]):
                 for jogador in database[team_name]['jogadores'][:11]:
-                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'], jogador['assistencias'])
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'],
+                                       jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], 
+                                       jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'])
                     if i == 0:
                         team1.adicionar_jogador(jogador)
                     else:
@@ -129,14 +220,20 @@ def partidas(userteam, season, database, tempo_partida, fase):
             # Adiciona reservas            
             for i, team_name in enumerate([team1.name, team2.name]):
                 for jogador in database[team_name]['jogadores'][12:]:
-                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], jogador['GK_skill'], jogador['assistencias'])
+                    jogador = Jogador(jogador['nome'], jogador['numero'], jogador['gols'], jogador['posicao'], jogador['passe'], jogador['finalizacao'], jogador['defesa'], 
+                                      jogador['interceptacao'], jogador['penalty'],  jogador['stamina'], jogador['ball_control'], 
+                                      jogador['GK_skill'], jogador['assistencias'], jogador['cartoes_amarelos'], jogador['cartoes_vermelhos'])
                     if i == 0:
                         team1.adicionar_reservas(jogador)
                     else:
                         team2.adicionar_reservas(jogador)
 
+             # ✅ Impede jogadores suspensos de jogar
+            verificar_suspensoes(team1, database, userteam)
+            verificar_suspensoes(team2, database, userteam)
+
             match1.append(team1)
-            match1.append(team2) 
+            match1.append(team2)  
 
             # Se o time do usuario estiver no matchbracket
             if userteam in match0:
@@ -189,9 +286,9 @@ def partidas(userteam, season, database, tempo_partida, fase):
             else:
                 matchday(match1, database, partida_longa, tempo_partida, fase)
 
-            with open('data/teams_jogadores.txt', 'w') as json_file:
-                json.dump(database, json_file, indent=4)
-               
+
+        save_data('data/teams_jogadores.txt', database)
+
         if fase == 'grupos':
             input('Pressione algo para continuar..')
             print(' ')
@@ -222,8 +319,8 @@ def realizar_etapa_final(equipes, num_equipes_proxima_etapa, database):
     return resultado_partidas
 
 
-with open('data/teams_jogadores.txt', encoding='utf-8') as f:
-    database = json.load(f)
+# with open('data/teams_jogadores.txt', encoding='utf-8') as f:
+#     database = json.load(f)
 
 # Lista dos grupos
 grupos = [('Catar', 'Equador', 'Senegal', 'Holanda'), 

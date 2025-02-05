@@ -1,51 +1,114 @@
 import random
 import time
+from logging_config import setup_logging
+import logging
 
+from models.jogador import Jogador
 from rich.console import Console
 from rich.table import Table
 
+# Configurar logs
+setup_logging()
 
-def yellow(jogador):
-    print("Cartão Amarelo para " + str(jogador.nome) + ' 🟡')
-    jogador.cartao_amarelo = True
+def aplicar_suspensao(jogador, team):
+    """
+    Adiciona o jogador à lista de suspensos e controla suspensão por acúmulo de amarelos.
     
+    Parâmetros:
+        jogador (Jogador): O jogador que recebeu o cartão vermelho ou acumulou amarelos.
+        team (Team): O time ao qual o jogador pertence.
+    """
 
-def quickyellow(jogador):
-    jogador.cartao_amarelo = True
+    if not hasattr(team, "suspensos"):  # Garante que a lista de suspensos existe
+        team.suspensos = []
+
+    # 🔥 Se o jogador recebeu um cartão vermelho, ele é suspenso automaticamente
+    if jogador.cartao_vermelho and jogador.nome not in team.suspensos:
+        team.suspensos.append(jogador.nome)  # Armazena apenas o nome do jogador
+        logging.info(f"🚫 {jogador.nome} está suspenso para a próxima partida do {team.name} por expulsão.")
+
+    # 🔥 Se acumulou 3 amarelos ao longo das partidas, é suspenso na próxima
+    elif jogador.cartoes_amarelos >= 3 and jogador.nome not in team.suspensos:
+        team.suspensos.append(jogador.nome)
+        logging.info(f"🚫 {jogador.nome} está suspenso para a próxima partida do {team.name} por acúmulo de 3 amarelos.")
+        jogador.cartoes_amarelos = 0  # Reseta os amarelos APÓS a suspensão ser aplicada
 
 
-def red(jogador):
-    print("Cartão Vermelho para " + str(jogador.nome) + ' 🔴')
-    jogador.cartao_vermelho = True
+def registrar_cartao(jogador, tipo, team, exibir_eventos=True):
+    """
+    Registra um cartão para um jogador e aplica suspensão conforme necessário.
+    
+    Parâmetros:
+        jogador (Jogador): O jogador que recebeu o cartão.
+        tipo (str): Tipo do cartão ('amarelo' ou 'vermelho').
+        team (Team): O time ao qual o jogador pertence.
+        exibir_eventos (bool): Se True, imprime o evento no console.
+    """
+
+    if jogador.cartao_vermelho:
+        logging.warning(f"Tentativa de dar um cartão para {jogador.nome}, mas ele já foi expulso!")
+        return  
+
+    if tipo == "amarelo":
+        jogador.recebeu_cartao_amarelo()
+
+        if jogador.cartoes_amarelos_na_partida == 2:
+            # 🔥 Se for o segundo amarelo NA MESMA PARTIDA, vira vermelho
+            jogador.cartao_vermelho = True
+            jogador.cartoes_vermelhos += 1  
+            
+            logging.info(f"🟡🟡 {jogador.nome} recebeu o segundo amarelo na mesma partida e foi expulso! 🔴")
+
+            if exibir_eventos:
+                print(f"🟡🟡 {jogador.nome} recebeu o segundo amarelo e foi expulso! 🔴")
+
+            aplicar_suspensao(jogador, team)  # Suspensão automática
+
+        elif jogador.cartoes_amarelos >= 3:
+            # 🔥 Se acumulou 3 amarelos ao longo das partidas, será suspenso na próxima
+            aplicar_suspensao(jogador, team)
+
+        else:
+            logging.info(f"🟡 Cartão Amarelo: {jogador.nome}")
+            if exibir_eventos:
+                print(f"🟡 Cartão Amarelo para {jogador.nome}!")
+
+    elif tipo == "vermelho":
+        jogador.recebeu_cartao_vermelho()
+        jogador.cartao_vermelho = True
+        
+        logging.info(f"🔴 Cartão Vermelho direto! {jogador.nome} foi expulso do time {team.name}.")
+
+        if exibir_eventos:
+            print(f"🔴 Cartão Vermelho para {jogador.nome}! Expulso da partida!")
+
+        aplicar_suspensao(jogador, team)  # Suspensão automática
 
 
-def quickred(jogador):
-    jogador.cartao_vermelho = True
-
-
-def goal(team, jogador):
-    print("Gooool! " + str(team.name) + " marcou! ⚽")
+def registrar_gol(team, jogador, exibir_eventos=True):
+    """Registra um gol e exibe o evento apenas se necessário."""
     team.goals += 1
     jogador.gol()
+    logging.info(f"GOL! {jogador.nome} marcou para {team.name}")
 
-
-def quickgoal(team, jogador):
-    team.goals += 1
-    jogador.gol()
+    if exibir_eventos:
+        print(f"Gooool! {team.name} marcou! ⚽")
 
 
 def quickgoal_sofrido(team):
     team.goals_sofridos += 1
-
-#Refazer usando a variavel penalty
+    
+#Preciso ver como refatorar isso aqui
 def cobrança_penalty(match):
     for i in match:
         nVar_penalti = random.randint(0,4)
         if nVar_penalti > 1:
             i.penalti_goals += 1
-            print(str(i.name) + ' ' + "Penalty Convertido! ✅")
+            # print(str(i.name) + ' ' + "Penalty Convertido! ✅")
+            logging.info(f"Pênalti convertido por {i.name}")
         else:
-            print(str(i.name) + ' ' + "Penalty Perdido!    ❌")
+            # print(str(i.name) + ' ' + "Penalty Perdido!    ❌")
+            logging.info(f"Pênalti perdido por {i.name}")
         time.sleep(0.5)
 
 
@@ -54,36 +117,86 @@ def quickcobrança_penalty(match):
         nVar_penalti = random.randint(0,4)
         if nVar_penalti > 1:
             i.penalti_goals += 1
+            logging.debug(f"Pênalti convertido por {i.name}")
+        else:
+            logging.debug(f"Pênalti perdido por {i.name}")
+
+
+def definir_posse_de_bola(team, meia_central_preferido=True):
+    """
+    Define a posse de bola para um time e escolhe um jogador para iniciar a jogada.
+
+    Parâmetros:
+        team (Team): O time que terá a posse de bola.
+        meia_central_preferido (bool): Se True, tenta escolher o meia central (jogador 10). Se False, escolhe qualquer jogador.
+
+    Retorna:
+        jogador_com_bola (Jogador): O jogador que inicia a posse de bola.
+    """
+    # Remove posse de bola de todos os jogadores do time
+    for jogador in team.players:
+        jogador.posse_de_bola = False
+
+    # Escolher meia central (jogador 10) se ele ainda estiver disponível
+    if meia_central_preferido:
+        jogador_central = next((j for j in team.players if j.numero == 10), None)
+        if jogador_central:  # Se o jogador 10 estiver disponível, ele recebe a posse
+            jogador_central.posse_de_bola = True
+            team.ball_possession = True
+            logging.info(f"{team.name} começa com a posse de bola ({jogador_central.nome}).")
+            return jogador_central
+
+    # Se não for o início ou o jogador 10 estiver expulso, escolhe um jogador aleatório
+    jogador_com_bola = random.choice(team.players)
+    jogador_com_bola.posse_de_bola = True
+    team.ball_possession = True
+
+    logging.info(f"{team.name} inicia a posse de bola com {jogador_com_bola.nome}.")
+    
+    return jogador_com_bola
+
+
+def inicializar_contadores(match):
+    """
+    Inicializa os contadores de estatísticas da partida.
+
+    Parâmetros:
+        match (list): Lista contendo os dois times.
+
+    Retorna:
+        dict: Dicionário com os contadores da partida.
+    """
+    contadores = {
+        "team_0_ball_possession": 0,
+        "team_1_ball_possession": 0,
+        "gols_evento": [],
+    }
+
+    # Inicializa estatísticas de chutes
+    for team in match:
+        team.chutes = 0
+        team.chutes_gol = 0
+
+    return contadores
 
 
 def matchday(match, json, quick_game, duracao_partida, fase):
-    # Inicializa a posse de bola
-    match[0].ball_possession = False
-    match[1].ball_possession = False
-    jogador_com_bola = None
-    ball_possession_start = random.randint(1, 100)
-    if ball_possession_start > 50:
-        match[0].ball_possession = True
-        match[0].players[10].posse_de_bola = True
-    else:
-        match[1].ball_possession = True
-        match[1].players[10].posse_de_bola = True
+    """
+    Simula uma partida entre dois times.
 
-    # Inicializa contadores e estatísticas
-    team_0_ball_possession = 0
-    team_1_ball_possession = 0
-    match[0].chutes = 0
-    match[1].chutes = 0
-    match[0].chutes_gol = 0
-    match[1].chutes_gol = 0
-    gols_evento = []
-
-    # Estatísticas de jogadores
-    # for team in match:
-    #     for jogador in team.players:
-    #         jogador.assistencias = 0
-    #         jogador.passes_bem_sucedidos = 0
-    #         jogador.desarmes = 0
+    Parâmetros:
+        match (list): Lista com os times que irão jogar.
+        json (dict): Banco de dados dos times.
+        quick_game (bool): Define se o jogo será rápido (sem exibição) ou detalhado.
+        duracao_partida (int): Duração total da partida.
+        fase (str): Define se a partida é de fase de grupos ou mata-mata.
+    """
+    logging.info(f"Iniciando partida: {match[0].name} vs {match[1].name}")
+    
+    # Define quem começa com a bola (meia central preferido no início do jogo)
+    time_inicial = random.choice(match)
+    jogador_com_bola = definir_posse_de_bola(time_inicial, meia_central_preferido=True)
+    contadores = inicializar_contadores(match)
 
     # Simulação da partida
     for i in range(0, duracao_partida):
@@ -104,10 +217,10 @@ def matchday(match, json, quick_game, duracao_partida, fase):
 
         if match[0].ball_possession == True:
             current_team = match[0]
-            team_0_ball_possession += 1
+            contadores["team_0_ball_possession"] += 1
         else:
             current_team = match[1]
-            team_1_ball_possession += 1
+            contadores["team_1_ball_possession"] += 1
 
         other_team = match[1] if current_team == match[0] else match[0]
         # Verifique qual jogador está com a bola
@@ -115,17 +228,15 @@ def matchday(match, json, quick_game, duracao_partida, fase):
             if jogador.posse_de_bola == True:
                 jogador_com_bola = jogador
                 
-        qnt_jogadores_current_team = (len(current_team.players) - 1)
-        qnt_jogadores_other_team = (len(other_team.players)- 1)
 
         # Execute as instruções para o jogador com a bola
         if jogador_com_bola.posicao == "GK":
             if quick_game == True:
                 jogador_com_bola.decisao_posse_de_bola()
-                jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
+                jogador_destino = random.choice(current_team.players)
                 jogador_com_bola.passar_bola(jogador_destino)
             else:
-                jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
+                jogador_destino = random.choice(current_team.players)
                 jogador_com_bola.passar_bola_quick(jogador_destino)
         else:
             # Nao acontece nada
@@ -141,27 +252,27 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     pass
                 else:
                     # Calcula a chance de manter a posse da bola
-                    ladrao_bola = other_team.players[random.randint(0,qnt_jogadores_other_team)]
+                    ladrao_bola = random.choice(other_team.players)
                     if jogador_com_bola.ball_control < ladrao_bola.defesa:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
-        # Passar a bola
+            # Passar a bola
             elif n1 <= 75:
                 # Chance de errar o passe
-                    ladrao_bola = other_team.players[random.randint(0,qnt_jogadores_other_team)]
+                    ladrao_bola = random.choice(other_team.players)
                     if jogador_com_bola.passe < ladrao_bola.interceptacao:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
                         ladrao_bola.posse_de_bola = True
                     else:
                         if quick_game == True:
-                            jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
+                            jogador_destino = random.choice(current_team.players)
                             jogador_com_bola.passar_bola(jogador_destino)
                         else:
-                            jogador_destino = current_team.players[random.randint(0, qnt_jogadores_current_team)]
+                            jogador_destino = random.choice(current_team.players)
                             jogador_com_bola.passar_bola_quick(jogador_destino)
-        # Chute
+            # Chute
             elif n1 <= 95:
                 if quick_game == True:
                     jogador_com_bola.chute()
@@ -174,21 +285,20 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     current_team.chutes_gol+=1 
                     if (jogador_com_bola.finalizacao + n5_1) > (other_team.players[0].GK_skill + n5_2):
                         event = str(i) + """' """ + str(jogador_com_bola.nome)
-                        gols_evento.append(event)
+                        contadores["gols_evento"].append(event)
                         if quick_game == True:
-                            goal(current_team, jogador_com_bola)
+                            registrar_gol(current_team, jogador_com_bola, exibir_eventos=True)  # Exibe o gol e registra no log
                             if jogador_com_bola.assistindo:
                                 jogador_com_bola.assistindo.assistencias += 1
                             jogador_com_bola.assistindo = None
                         else:
-                            quickgoal(current_team, jogador_com_bola)
+                            registrar_gol(current_team, jogador_com_bola, exibir_eventos=False) # Apenas registra no log
                             if jogador_com_bola.assistindo:
                                 jogador_com_bola.assistindo.assistencias += 1
                             jogador_com_bola.assistindo = None
                         quickgoal_sofrido(other_team)
                         current_team.ball_possession = False
-                        other_team.ball_possession = True
-                        other_team.players[10].posse_de_bola = True
+                        jogador_com_bola = definir_posse_de_bola(other_team, meia_central_preferido=False)
                     else:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
@@ -200,39 +310,31 @@ def matchday(match, json, quick_game, duracao_partida, fase):
 
             #Falta
             elif n1 <= 99:
-                n2_1 = random.randint(1,10) 
-                if n2_1 > 8:
-                    # Cartao Amarelo
-                    jogador_faltoso = other_team.players[random.randint(0, qnt_jogadores_other_team)]
-                    if jogador_faltoso.cartao_amarelo == False:
-                        if quick_game == True:
-                            yellow(jogador_faltoso)
+                if random.randint(1, 10) >= 8:  # Chance de falta que gera cartão
+                    jogadores_disponiveis = [j for j in other_team.players if not j.cartao_vermelho]
+                    if jogadores_disponiveis:
+                        jogador_faltoso = random.choice(jogadores_disponiveis)
+                        if random.randint(1, 100) >= 85:
+                            print('vermelho')
+                            pass
+                            # registrar_cartao(jogador_faltoso, "vermelho", other_team, exibir_eventos=quick_game)
                         else:
-                            quickyellow(jogador_faltoso)
-                    else:
-                        pass
-                        # red(jogador_faltoso)
-                        # for jogador in other_team.players:
-                        #     if jogador.cartao_vermelho:
-                        #         jogador_red_index = jogador
-                        #         jogador_red_index = other_team.players.index(jogador_red_index)
-                        #         jogador_red = other_team.players.pop(jogador_red_index)
-                        #         other_team.suspensos.append(jogador_red)
+                            print('amarelo')
+                            registrar_cartao(jogador_faltoso, "amarelo", other_team, exibir_eventos=quick_game)
                     # Cobrança falta
                     n3_1 = random.randint(0,10)
                     if n3_1 >= 9:
                         event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Cobr. de Falta)"
-                        gols_evento.append(event)
+                        contadores["gols_evento"].append(event)
                         current_team.chutes+=1
                         current_team.chutes_gol+=1
                         if quick_game == True: 
-                            goal(current_team, jogador_com_bola)
+                            registrar_gol(current_team, jogador_com_bola, exibir_eventos=True)  # Exibe o gol e registra no log
                         else:
-                            quickgoal(current_team, jogador_com_bola)
+                            registrar_gol(current_team, jogador_com_bola, exibir_eventos=False) # Apenas registra no log
                         quickgoal_sofrido(other_team)
                         current_team.ball_possession = False
-                        other_team.ball_possession = True
-                        other_team.players[10].posse_de_bola = True
+                        jogador_com_bola = definir_posse_de_bola(other_team, meia_central_preferido=False)
                     else:
                         current_team.ball_possession = False
                         other_team.ball_possession = True
@@ -257,12 +359,14 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                     nVar_3 = random.randint(20,100)
                     if (jogador_com_bola.penalty + nVar_2) > (other_team.players[0].GK_skill + nVar_3):
                         event = str(i) + """' """ + str(jogador_com_bola.nome) + " (Penalty)"
-                        gols_evento.append(event)
+                        contadores["gols_evento"].append(event)
                         if quick_game == True:
-                            goal(varteam, jogador_com_bola)
+                            registrar_gol(varteam, jogador_com_bola, exibir_eventos=True)  # Exibe o gol e registra no log
                         else:
-                            quickgoal(varteam, jogador_com_bola)
+                            registrar_gol(varteam, jogador_com_bola, exibir_eventos=False) # Apenas registra no log
                         quickgoal_sofrido(varlteam)
+                        current_team.ball_possession = False
+                        jogador_com_bola = definir_posse_de_bola(other_team, meia_central_preferido=False)
                     else:
                         if quick_game == True:
                             print("Penalty Perdido! ❌")
@@ -315,22 +419,30 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 json[i]["goals"] += team.goals 
                 json[i]["goals_sofridos"] += team.goals_sofridos
                 json[i]["goaldif"] += (team.goals - team.goals_sofridos)
+
+                # Se não existir "suspensos", cria a chave no JSON
+                if "suspensos" not in json[i]:
+                    json[i]["suspensos"] = []
+
+                # Converte todos os objetos "Jogador" em nomes antes de salvar
+                nomes_suspensos = [jogador.nome if isinstance(jogador, Jogador) else jogador for jogador in team.suspensos]
+
+                # Adiciona apenas os novos suspensos que ainda não estão no JSON
+                for nome in nomes_suspensos:
+                    if nome not in json[i]["suspensos"]:
+                        json[i]["suspensos"].append(nome)  # Adiciona apenas o nome do jogador
      
 
-    # Atualiza a lista de jogadores no arquivo JSON com os gols e assistencias marcados na partida
-    contador_time = 0
-    for t in match:
-        # print('-----')
-        for j in match[contador_time].players:
-            # print(j)
-            for i in json[t.name]["jogadores"]:
-                if i['nome'] == j.nome:
-                    i["gols"] = j.gols
-                    i["assistencias"] = j.assistencias
-                    # print(i)
-                    # print(j.nome)
-                    # i["gols"] = 0
-        contador_time +=1
+    # Atualiza a lista de jogadores no arquivo JSON com os gols, assistências e cartões
+    for team in match:
+        for jogador in team.players + [j for j in team.suspensos if isinstance(j, Jogador)]:
+            for i in json[team.name]["jogadores"]:
+                if i["nome"] == jogador.nome:
+                    i["gols"] = jogador.gols
+                    i["assistencias"] = jogador.assistencias
+                    i["cartoes_amarelos"] = jogador.cartoes_amarelos
+                    i["cartoes_vermelhos"] = jogador.cartoes_vermelhos
+                    i["cartoes_amarelos_na_partida"] = 0
 
     # Declarando Vencedor, Perdedor e Empate
     winner = ""
@@ -366,9 +478,9 @@ def matchday(match, json, quick_game, duracao_partida, fase):
                 json[i]["lost"] += 1
         
     #calcula a porcentagem de posse de bola de cada time
-    total_possession = team_0_ball_possession + team_1_ball_possession
-    team_0_percentage = (team_0_ball_possession / total_possession) * 100
-    team_1_percentage = (team_1_ball_possession / total_possession) * 100
+    total_possession = contadores["team_0_ball_possession"] + contadores["team_1_ball_possession"]
+    team_0_percentage = (contadores["team_0_ball_possession"] / total_possession) * 100
+    team_1_percentage = (contadores["team_1_ball_possession"] / total_possession) * 100
 
     if quick_game == True:
         print(' ')
@@ -384,7 +496,7 @@ def matchday(match, json, quick_game, duracao_partida, fase):
         print(' ')
         
         #Gols
-        for evento in gols_evento:
+        for evento in contadores["gols_evento"]:
             print(evento)
         
         # for jogador in match[0].players:
